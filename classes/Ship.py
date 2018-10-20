@@ -16,11 +16,11 @@ class Ship(sprite.Sprite):
     #     return rot_image,rot_rect
 
     def update(self, keys, *args):
-        if keys[K_d] and self.rect.x > 10:
+        if keys[K_a] and self.rect.x > 10:
             self.rect.x -= self.speed
-        if keys[K_q] and self.rect.x < 740:
+        if keys[K_d] and self.rect.x < 740:
             self.rect.x += self.speed
-        if keys[K_z] and self.rect.x > 10:
+        if keys[K_w] and self.rect.x > 10:
             self.rect.y -= self.speed
         if keys[K_s] and self.rect.x < 740:
             self.rect.y += self.speed
