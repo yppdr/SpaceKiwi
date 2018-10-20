@@ -25,8 +25,9 @@ class Ship(sprite.Sprite):
         if keys[K_s] and self.rect.x < 740:
             self.rect.y += self.speed
         # change rotation of image
-        # if keys[K_a]
-        #     self.image
-        # if keys[K_e]
+        if keys[K_a]:
+            self.image = transform.rotate(self.image, -90)
+        if keys[K_e]:
+            self.image = transform.rotate(self.image, 90)
 
         self.game.screen.blit(self.image, self.rect)
