@@ -8,17 +8,17 @@ import sys
 from os.path import abspath, dirname
 from random import randint, choice
 
-from classes.constant import *
+from constant import *
 
-from classes.Ship import *
-from classes.Blocker import *
-from classes.Bullet import *
-from classes.EnemiesGroup import *
-from classes.Enemy import *
-from classes.Explosion import *
-from classes.Life import *
-from classes.Mistery import *
-from classes.Text import *
+from Ship import *
+from Blocker import *
+from Bullet import *
+from EnemiesGroup import *
+from Enemy import *
+from Explosion import *
+from Life import *
+from Mistery import *
+from Text import *
 
 class SpaceInvaders(object):
     def __init__(self):

@@ -1,5 +1,6 @@
 from pygame import *
 
+from spaceinvaders import *
 from constant import *
 
 class Enemy(sprite.Sprite):
@@ -48,6 +49,7 @@ class Enemy(sprite.Sprite):
 
             self.timer += self.moveTime
 
+        game = SpaceInvaders()
         game.screen.blit(self.image, self.rect)
 
     def load_images(self):

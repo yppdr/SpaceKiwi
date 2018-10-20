@@ -1,5 +1,6 @@
 from pygame import *
 
+from spaceinvaders import *
 from constant import *
 
 class Bullet(sprite.Sprite):
@@ -13,6 +14,7 @@ class Bullet(sprite.Sprite):
         self.filename = filename
 
     def update(self, keys, *args):
+        game = SpaceInvaders()
         game.screen.blit(self.image, self.rect)
         self.rect.y += self.speed * self.direction
         if self.rect.y < 15 or self.rect.y > 600:

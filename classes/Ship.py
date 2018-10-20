@@ -1,5 +1,6 @@
 from pygame import *
 
+from spaceinvaders import *
 from constant import *
 
 class Ship(sprite.Sprite):
@@ -14,4 +15,5 @@ class Ship(sprite.Sprite):
             self.rect.x -= self.speed
         if keys[K_RIGHT] and self.rect.x < 740:
             self.rect.x += self.speed
+        game = SpaceInvaders()
         game.screen.blit(self.image, self.rect)

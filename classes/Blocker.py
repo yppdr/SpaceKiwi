@@ -1,5 +1,6 @@
 from pygame import *
 
+from spaceinvaders import *
 from constant import *
 
 class Blocker(sprite.Sprite):
@@ -15,4 +16,5 @@ class Blocker(sprite.Sprite):
         self.column = column
 
     def update(self, keys, *args):
+        game = SpaceInvaders()
         game.screen.blit(self.image, self.rect)

@@ -1,5 +1,6 @@
 from pygame import *
 
+from spaceinvaders import *
 from constant import *
 
 class Life(sprite.Sprite):
@@ -10,4 +11,5 @@ class Life(sprite.Sprite):
         self.rect = self.image.get_rect(topleft=(xpos, ypos))
 
     def update(self, keys, *args):
+        game = SpaceInvaders()
         game.screen.blit(self.image, self.rect)

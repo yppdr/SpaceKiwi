@@ -1,5 +1,6 @@
 from pygame import *
 
+from spaceinvaders import *
 from constant import *
 
 class Explosion(sprite.Sprite):
@@ -22,6 +23,7 @@ class Explosion(sprite.Sprite):
         self.timer = time.get_ticks()
 
     def update(self, keys, currentTime):
+        game = SpaceInvaders()
         passed = currentTime - self.timer
         if self.isMystery:
             if passed <= 200:
