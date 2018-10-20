@@ -157,10 +157,10 @@ class SpaceInvaders(object):
                         else:
                             leftbullet = Bullet(self.player.rect.x + 8,
                                                 self.player.rect.y + 5, -1,
-                                                15, 'laser', 'left')
+                                                15, 'laser', 'left', self)
                             rightbullet = Bullet(self.player.rect.x + 38,
                                                  self.player.rect.y + 5, -1,
-                                                 15, 'laser', 'right')
+                                                 15, 'laser', 'right', self)
                             self.bullets.add(leftbullet)
                             self.bullets.add(rightbullet)
                             self.allSprites.add(self.bullets)
