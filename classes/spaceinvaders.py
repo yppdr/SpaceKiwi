@@ -44,7 +44,7 @@ class SpaceInvaders(object):
         self.playerGroup = sprite.Group(self.player)
         self.explosionsGroup = sprite.Group()
         self.bullets = sprite.Group()
-        self.mysteryShip = Mystery()
+        self.mysteryShip = Mystery(self)
         self.mysteryGroup = sprite.Group(self.mysteryShip)
         self.enemyBullets = sprite.Group()
         self.reset_lives(lives)
@@ -273,7 +273,7 @@ class SpaceInvaders(object):
                     self.explosionsGroup.add(explosion)
                     self.allSprites.remove(currentSprite)
                     self.mysteryGroup.remove(currentSprite)
-                    newShip = Mystery()
+                    newShip = Mystery(self)
                     self.allSprites.add(newShip)
                     self.mysteryGroup.add(newShip)
                     break
