@@ -7,6 +7,8 @@ from pygame import *
 import sys
 from os.path import abspath, dirname
 from random import randint, choice
+from yannis import Blocker
+
 
 BASE_PATH = abspath(dirname(__file__))
 FONT_PATH = BASE_PATH + '/fonts/'
@@ -185,21 +187,6 @@ class EnemiesGroup(sprite.Group):
                 self.leftAddMove = self._leftKilledColumns * 5
                 isColumnDead = self.is_column_dead(self._leftAliveColumn)
 
-
-class Blocker(sprite.Sprite):
-    def __init__(self, size, color, row, column):
-        sprite.Sprite.__init__(self)
-        self.height = size
-        self.width = size
-        self.color = color
-        self.image = Surface((self.width, self.height))
-        self.image.fill(self.color)
-        self.rect = self.image.get_rect()
-        self.row = row
-        self.column = column
-
-    def update(self, keys, *args):
-        game.screen.blit(self.image, self.rect)
 
 
 class Mystery(sprite.Sprite):
