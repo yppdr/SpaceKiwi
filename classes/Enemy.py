@@ -3,7 +3,8 @@ from pygame import *
 from constant import *
 
 class Enemy(sprite.Sprite):
-    def __init__(self, row, column):
+    def __init__(self, row, column, game):
+        self.game = game
         sprite.Sprite.__init__(self)
         self.row = row
         self.column = column
@@ -48,7 +49,7 @@ class Enemy(sprite.Sprite):
 
             self.timer += self.moveTime
 
-        game.screen.blit(self.image, self.rect)
+        self.game.screen.blit(self.image, self.rect)
 
     def load_images(self):
         images = {0: ['1_2', '1_1'],

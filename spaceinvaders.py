@@ -40,7 +40,7 @@ class SpaceInvaders(object):
         self.enemyPosition = self.enemyPositionStart
 
     def reset(self, score, lives, newGame=False):
-        self.player = Ship()
+        self.player = Ship(self)
         self.playerGroup = sprite.Group(self.player)
         self.explosionsGroup = sprite.Group()
         self.bullets = sprite.Group()
@@ -72,16 +72,16 @@ class SpaceInvaders(object):
         blockerGroup = sprite.Group()
         for row in range(4):
             for column in range(9):
-                blocker = Blocker(10, GREEN, row, column)
+                blocker = Blocker(10, GREEN, row, column, self)
                 blocker.rect.x = 50 + (200 * number) + (column * blocker.width)
                 blocker.rect.y = 450 + (row * blocker.height)
                 blockerGroup.add(blocker)
         return blockerGroup
 
     def reset_lives_sprites(self):
-        self.life1 = Life(715, 3)
-        self.life2 = Life(742, 3)
-        self.life3 = Life(769, 3)
+        self.life1 = Life(715, 3, self)
+        self.life2 = Life(742, 3, self)
+        self.life3 = Life(769, 3, self)
 
         if self.lives == 3:
             self.livesGroup = sprite.Group(self.life1, self.life2, self.life3)
@@ -150,7 +150,7 @@ class SpaceInvaders(object):
                         if self.score < 1000:
                             bullet = Bullet(self.player.rect.x + 23,
                                             self.player.rect.y + 5, -1,
-                                            15, 'laser', 'center')
+                                            15, 'laser', 'center', self)
                             self.bullets.add(bullet)
                             self.allSprites.add(self.bullets)
                             self.sounds['shoot'].play()
@@ -170,7 +170,7 @@ class SpaceInvaders(object):
         enemies = EnemiesGroup(10, 5)
         for row in range(5):
             for column in range(10):
-                enemy = Enemy(row, column)
+                enemy = Enemy(row, column, self)
                 enemy.rect.x = 157 + (column * 50)
                 enemy.rect.y = self.enemyPosition + (row * 45)
                 enemies.add(enemy)
@@ -185,7 +185,7 @@ class SpaceInvaders(object):
             if enemy:
                 self.enemyBullets.add(
                     Bullet(enemy.rect.x + 14, enemy.rect.y + 20, 1, 5,
-                           'enemylaser', 'center'))
+                           'enemylaser', 'center', self))
                 self.allSprites.add(self.enemyBullets)
                 self.timer = time.get_ticks()
 
@@ -251,7 +251,7 @@ class SpaceInvaders(object):
                     explosion = Explosion(currentSprite.rect.x,
                                           currentSprite.rect.y,
                                           currentSprite.row, False, False,
-                                          score)
+                                          score, self)
                     self.explosionsGroup.add(explosion)
                     self.allSprites.remove(currentSprite)
                     self.enemies.remove(currentSprite)
@@ -269,7 +269,7 @@ class SpaceInvaders(object):
                     explosion = Explosion(currentSprite.rect.x,
                                           currentSprite.rect.y,
                                           currentSprite.row, False, True,
-                                          score)
+                                          score, self)
                     self.explosionsGroup.add(explosion)
                     self.allSprites.remove(currentSprite)
                     self.mysteryGroup.remove(currentSprite)
@@ -300,7 +300,7 @@ class SpaceInvaders(object):
                         self.startGame = False
                     self.sounds['shipexplosion'].play()
                     explosion = Explosion(playerShip.rect.x, playerShip.rect.y,
-                                          0, True, False, 0)
+                                          0, True, False, 0, self)
                     self.explosionsGroup.add(explosion)
                     self.allSprites.remove(playerShip)
                     self.playerGroup.remove(playerShip)

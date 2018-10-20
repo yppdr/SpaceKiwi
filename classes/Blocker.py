@@ -3,7 +3,8 @@ from pygame import *
 from constant import *
 
 class Blocker(sprite.Sprite):
-    def __init__(self, size, color, row, column):
+    def __init__(self, size, color, row, column, game):
+        self.game = game
         sprite.Sprite.__init__(self)
         self.height = size
         self.width = size
@@ -15,4 +16,4 @@ class Blocker(sprite.Sprite):
         self.column = column
 
     def update(self, keys, *args):
-        game.screen.blit(self.image, self.rect)
+        self.game.screen.blit(self.image, self.rect)
