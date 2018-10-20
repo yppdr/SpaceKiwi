@@ -69,13 +69,28 @@ class SpaceInvaders(object):
         self.shipAlive = True
 
     def make_blockers(self, number):
+        posblock = [1, 2, 3, 4]
         blockerGroup = sprite.Group()
-        for row in range(4):
-            for column in range(9):
-                blocker = Blocker(10, GREEN, row, column, self)
-                blocker.rect.x = 50 + (200 * number) + (column * blocker.width)
-                blocker.rect.y = 450 + (row * blocker.height)
-                blockerGroup.add(blocker)
+        for row in range(randint(2, 5)):
+            for column in range(randint(5, 10)):
+                blocker = Blocker(randint(5, 18), GREEN, row, column, self)
+                for pos in range(posblock[0], posblock[3]):
+                    if pos == 1:
+                        blocker.rect.x = randint(50, 350) + (200 * number) + (column * blocker.width)
+                        blocker.rect.y = randint(50, 250) + (row * blocker.height)
+                        blockerGroup.add(blocker)
+                    elif pos == 2:
+                        blocker.rect.x = randint(350, 750) + (200 * number) + (column * blocker.width)
+                        blocker.rect.y = randint(50, 250) + (row * blocker.height)
+                        blockerGroup.add(blocker)
+                    elif pos == 3:
+                        blocker.rect.x = randint(50, 350) + (200 * number) + (column * blocker.width)
+                        blocker.rect.y = randint(350, 550) + (row * blocker.height)
+                        blockerGroup.add(blocker)
+                    elif pos == 4:
+                        blocker.rect.x = randint(350, 750) + (200 * number) + (column * blocker.width)
+                        blocker.rect.y = randint(350, 550) + (row * blocker.height)
+                        blockerGroup.add(blocker)
         return blockerGroup
 
     def reset_lives_sprites(self):
