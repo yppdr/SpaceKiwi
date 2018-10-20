@@ -15,4 +15,8 @@ class Ship(sprite.Sprite):
             self.rect.x -= self.speed
         if keys[K_RIGHT] and self.rect.x < 740:
             self.rect.x += self.speed
+        if keys[K_UP] and self.rect.x > 10:
+            self.rect.y -= self.speed
+        if keys[K_DOWN] and self.rect.x < 740:
+            self.rect.y += self.speed
         self.game.screen.blit(self.image, self.rect)

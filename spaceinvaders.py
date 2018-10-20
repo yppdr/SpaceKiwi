@@ -318,7 +318,7 @@ class SpaceInvaders(object):
 
     def create_new_ship(self, createShip, currentTime):
         if createShip and (currentTime - self.shipTimer > 900):
-            self.player = Ship()
+            self.player = Ship(self)
             self.allSprites.add(self.player)
             self.playerGroup.add(self.player)
             self.makeNewShip = False
