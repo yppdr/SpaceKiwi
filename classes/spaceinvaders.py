@@ -34,6 +34,7 @@ class SpaceInvaders(object):
         self.startGame = False
         self.mainScreen = True
         self.gameOver = False
+        self.boss = 0
         # Initial value for a new game
         self.enemyPositionDefault = 65
         # Counter for enemy starting position (increased each new round)
@@ -188,13 +189,24 @@ class SpaceInvaders(object):
 
 
     def make_enemies(self):
-        enemies = EnemiesGroup(10, 5)
-        for row in range(5):
-            for column in range(10):
-                enemy = Enemy(row, column, self)
-                enemy.rect.x = 157 + (column * 50)
-                enemy.rect.y = self.enemyPosition + (row * 45)
-                enemies.add(enemy)
+
+        if self.boss == 1:
+            enemies = EnemiesGroup(10, 5)
+            for row in range(5):
+                for column in range(10):
+                    enemy = Enemy(row, column, self)
+                    enemy.rect.x = 157 + (column * 1)
+                    enemy.rect.y = self.enemyPosition + (row * 1)
+                    enemies.add(enemy)
+
+        else :
+            enemies = EnemiesGroup(10, 5)
+            for row in range(5):
+                for column in range(10):
+                    enemy = Enemy(row, column, self)
+                    enemy.rect.x = 157 + (column * 50)
+                    enemy.rect.y = self.enemyPosition + (row * 45)
+                    enemies.add(enemy)
 
         self.enemies = enemies
         self.allSprites = sprite.Group(self.player, self.enemies,
@@ -414,6 +426,7 @@ class SpaceInvaders(object):
                     self.update_enemy_speed()
                     if len(self.enemies) > 0:
                         self.make_enemies_shoot()
+                        self.boss = 1
 
             elif self.gameOver:
                 currentTime = time.get_ticks()
