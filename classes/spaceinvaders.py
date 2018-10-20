@@ -149,17 +149,17 @@ class SpaceInvaders(object):
                     if len(self.bullets) == 0 and self.shipAlive:
                         if self.score < 1000:
                             bullet = Bullet(self.player.rect.x + 23,
-                                            self.player.rect.y + 5, -1,
-                                            15, 'laser', 'center', self)
+                                            self.player.rect.y + 5, self.player.direction,
+                                            15, 'laser', 'center', self, )
                             self.bullets.add(bullet)
                             self.allSprites.add(self.bullets)
                             self.sounds['shoot'].play()
                         else:
                             leftbullet = Bullet(self.player.rect.x + 8,
-                                                self.player.rect.y + 5, -1,
+                                                self.player.rect.y + 5, self.player.direction,
                                                 15, 'laser', 'left', self)
                             rightbullet = Bullet(self.player.rect.x + 38,
-                                                 self.player.rect.y + 5, -1,
+                                                 self.player.rect.y + 5, self.player.direction,
                                                  15, 'laser', 'right', self)
                             self.bullets.add(leftbullet)
                             self.bullets.add(rightbullet)

@@ -15,6 +15,16 @@ class Bullet(sprite.Sprite):
 
     def update(self, keys, *args):
         self.game.screen.blit(self.image, self.rect)
-        self.rect.y += self.speed * self.direction
-        if self.rect.y < 15 or self.rect.y > 600:
+        
+        # gestion direction du tir
+        if self.direction == 'UP':
+            self.rect.y += self.speed * -1
+        if self.direction == 'LEFT':
+            self.rect.x += self.speed
+        if self.direction == 'DOWN':
+            self.rect.y += self.speed
+        if self.direction == 'RIGHT':
+            self.rect.x += self.speed * -1
+
+        if self.rect.y < 15 or self.rect.y > 600 or self.rect.x < 15 or self.rect.x > 600:
             self.kill()
