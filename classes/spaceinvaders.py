@@ -153,17 +153,17 @@ class SpaceInvaders(object):
                     if len(self.bullets) == 0 and self.shipAlive:
                         if SHIP == '1':
                             bullet = Bullet(self.player.rect.x + 23,
-                                            self.player.rect.y + 5, -1,
-                                            15, 'laser', 'center', self)
+                                            self.player.rect.y + 5, self.player.orientation,
+                                            15, 'laser', 'center', self, )
                             self.bullets.add(bullet)
                             self.allSprites.add(self.bullets)
                             self.sounds['shoot'].play()
                         elif SHIP == '2':
                             leftbullet = Bullet(self.player.rect.x + 8,
-                                                self.player.rect.y + 5, -1,
+                                                self.player.rect.y + 5, self.player.orientation,
                                                 15, 'laser', 'left', self)
                             rightbullet = Bullet(self.player.rect.x + 38,
-                                                 self.player.rect.y + 5, -1,
+                                                 self.player.rect.y + 5, self.player.orientation,
                                                  15, 'laser', 'right', self)
                             self.bullets.add(leftbullet)
                             self.bullets.add(rightbullet)
@@ -171,13 +171,13 @@ class SpaceInvaders(object):
                             self.sounds['shoot3'].play()
                         else :
                             leftbullet = Bullet(self.player.rect.x + 8,
-                                                self.player.rect.y + 5, -1,
+                                                self.player.rect.y + 5, self.player.orientation,
                                                 15, 'laser', 'left', self)
                             rightbullet = Bullet(self.player.rect.x + 38,
-                                                 self.player.rect.y + 5, -1,
+                                                 self.player.rect.y + 5, self.player.orientation,
                                                  15, 'laser', 'right', self)
                             centerbullet = Bullet(self.player.rect.x + 38,
-                                                 self.player.rect.y + 5, -1,
+                                                 self.player.rect.y + 5, self.player.orientation,
                                                  30, 'laser', 'top', self)
 
                             self.bullets.add(leftbullet)
@@ -204,6 +204,7 @@ class SpaceInvaders(object):
         if (time.get_ticks() - self.timer) > 700:
             enemy = self.enemies.random_bottom()
             if enemy:
+                # TODO ennemie shot
                 self.enemyBullets.add(
                     Bullet(enemy.rect.x + 14, enemy.rect.y + 20, 1, 5,
                            'enemylaser', 'center', self))

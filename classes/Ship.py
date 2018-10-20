@@ -13,6 +13,7 @@ class Ship(sprite.Sprite):
         self.image = IMAGES[SHIP]
         self.rect = self.image.get_rect(topleft=(375, 540))
         self.speed = 5
+        self.orientation = 'UP'
 
     def update(self, keys, *args):
         if platform.system() == 'Windows':
@@ -31,9 +32,24 @@ class Ship(sprite.Sprite):
         else:
             if keys[K_a]:
                 self.image = transform.rotate(self.image, -90)
-                print(self.image)
+                if self.orientation == 'UP':
+                    self.orientation = 'LEFT'
+                elif self.orientation == 'LEFT':
+                    self.orientation = 'DOWN'
+                elif self.orientation == 'DOWN':
+                    self.orientation = 'RIGHT'
+                elif self.orientation == 'RIGHT':
+                    self.orientation = 'UP'
             if keys[K_e]:
                 self.image = transform.rotate(self.image, 90)
+                if self.orientation == 'UP':
+                    self.orientation = 'RIGHT'
+                elif self.orientation == 'RIGHT':
+                    self.orientation = 'DOWN'
+                elif self.orientation == 'DOWN':
+                    self.orientation = 'LEFT'
+                elif self.orientation == 'LEFT':
+                    self.orientation = 'UP'
             if keys[K_q] and self.rect.x > 10:
                 self.rect.x -= self.speed
             if keys[K_d] and self.rect.x < 740:
