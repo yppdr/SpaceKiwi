@@ -29,8 +29,8 @@ class Ship(sprite.Sprite):
                 self.rect.y += self.speed
         else:
             if keys[K_a]:
-                print("hello")
                 self.image = transform.rotate(self.image, -90)
+                print(self.image)
             if keys[K_e]:
                 self.image = transform.rotate(self.image, 90)
             if keys[K_q] and self.rect.x > 10:

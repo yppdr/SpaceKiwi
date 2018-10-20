@@ -28,7 +28,7 @@ class SpaceInvaders(object):
         init()
         self.caption = display.set_caption('Space Invaders')
         self.screen = SCREEN
-        self.background = image.load(IMAGE_PATH + 'background.jpg').convert()
+        self.background = image.load(IMAGE_PATH + 'background1.jpg').convert()
         self.startGame = False
         self.mainScreen = True
         self.gameOver = False
