@@ -147,14 +147,14 @@ class SpaceInvaders(object):
             if e.type == KEYDOWN:
                 if e.key == K_SPACE:
                     if len(self.bullets) == 0 and self.shipAlive:
-                        if self.score < 1000:
+                        if SHIP == '1':
                             bullet = Bullet(self.player.rect.x + 23,
                                             self.player.rect.y + 5, self.player.direction,
                                             15, 'laser', 'center', self, )
                             self.bullets.add(bullet)
                             self.allSprites.add(self.bullets)
                             self.sounds['shoot'].play()
-                        else:
+                        elif SHIP == '2':
                             leftbullet = Bullet(self.player.rect.x + 8,
                                                 self.player.rect.y + 5, self.player.direction,
                                                 15, 'laser', 'left', self)
@@ -163,6 +163,22 @@ class SpaceInvaders(object):
                                                  15, 'laser', 'right', self)
                             self.bullets.add(leftbullet)
                             self.bullets.add(rightbullet)
+                            self.allSprites.add(self.bullets)
+                            self.sounds['shoot2'].play()
+                        else :
+                            leftbullet = Bullet(self.player.rect.x + 8,
+                                                self.player.rect.y + 5, -1,
+                                                15, 'laser', 'left', self)
+                            rightbullet = Bullet(self.player.rect.x + 38,
+                                                 self.player.rect.y + 5, -1,
+                                                 15, 'laser', 'right', self)
+                            centerbullet = Bullet(self.player.rect.x + 38,
+                                                 self.player.rect.y + 5, -1,
+                                                 30, 'laser', 'top', self)
+
+                            self.bullets.add(leftbullet)
+                            self.bullets.add(rightbullet)
+                            self.bullets.add(centerbullet)
                             self.allSprites.add(self.bullets)
                             self.sounds['shoot2'].play()
 

@@ -1,4 +1,5 @@
 import platform
+from random import randint
 
 from pygame import *
 
@@ -9,7 +10,7 @@ class Ship(sprite.Sprite):
     def __init__(self, game):
         sprite.Sprite.__init__(self)
         self.game = game
-        self.image = IMAGES['ship']
+        self.image = IMAGES[SHIP]
         self.rect = self.image.get_rect(topleft=(375, 540))
         self.speed = 5
         self.direction = 'UP'
