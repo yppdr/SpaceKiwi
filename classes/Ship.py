@@ -15,6 +15,10 @@ class Ship(sprite.Sprite):
 
     def update(self, keys, *args):
         if platform.system() == 'Windows':
+            if keys[K_q]:
+                self.image = transform.rotate(self.image, -90)
+            if keys[K_e]:
+                self.image = transform.rotate(self.image, 90)
             if keys[K_a] and self.rect.x > 10:
                 self.rect.x -= self.speed
             if keys[K_d] and self.rect.x < 740:
@@ -24,6 +28,11 @@ class Ship(sprite.Sprite):
             if keys[K_s] and self.rect.y < 550:
                 self.rect.y += self.speed
         else:
+            if keys[K_a]:
+                print("hello")
+                self.image = transform.rotate(self.image, -90)
+            if keys[K_e]:
+                self.image = transform.rotate(self.image, 90)
             if keys[K_q] and self.rect.x > 10:
                 self.rect.x -= self.speed
             if keys[K_d] and self.rect.x < 740:
@@ -32,11 +41,5 @@ class Ship(sprite.Sprite):
                 self.rect.y -= self.speed
             if keys[K_s] and self.rect.y < 550:
                 self.rect.y += self.speed
-        # change rotation of image
-        if keys[K_a]:
-            print("hello")
-            self.image = transform.rotate(self.image, -90)
-        if keys[K_e]:
-            self.image = transform.rotate(self.image, 90)
 
         self.game.screen.blit(self.image, self.rect)
