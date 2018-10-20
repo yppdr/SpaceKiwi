@@ -8,17 +8,17 @@ import sys
 from os.path import abspath, dirname
 from random import randint, choice
 
-from classes.constant import *
+from constant import *
 
-from classes.Ship import *
-from classes.Blocker import *
-from classes.Bullet import *
-from classes.EnemiesGroup import *
-from classes.Enemy import *
-from classes.Explosion import *
-from classes.Life import *
-from classes.Mistery import *
-from classes.Text import *
+from Ship import *
+from Blocker import *
+from Bullet import *
+from EnemiesGroup import *
+from Enemy import *
+from Explosion import *
+from Life import *
+from Mistery import *
+from Text import *
 
 class SpaceInvaders(object):
     def __init__(self):
@@ -28,7 +28,7 @@ class SpaceInvaders(object):
         init()
         self.caption = display.set_caption('Space Invaders')
         self.screen = SCREEN
-        self.background = image.load(IMAGE_PATH + 'background.jpg').convert()
+        self.background = image.load(IMAGE_PATH + 'background1.jpg').convert()
         self.startGame = False
         self.mainScreen = True
         self.gameOver = False
@@ -44,7 +44,7 @@ class SpaceInvaders(object):
         self.playerGroup = sprite.Group(self.player)
         self.explosionsGroup = sprite.Group()
         self.bullets = sprite.Group()
-        self.mysteryShip = Mystery()
+        self.mysteryShip = Mystery(self)
         self.mysteryGroup = sprite.Group(self.mysteryShip)
         self.enemyBullets = sprite.Group()
         self.reset_lives(lives)
@@ -157,10 +157,10 @@ class SpaceInvaders(object):
                         else:
                             leftbullet = Bullet(self.player.rect.x + 8,
                                                 self.player.rect.y + 5, -1,
-                                                15, 'laser', 'left')
+                                                15, 'laser', 'left', self)
                             rightbullet = Bullet(self.player.rect.x + 38,
                                                  self.player.rect.y + 5, -1,
-                                                 15, 'laser', 'right')
+                                                 15, 'laser', 'right', self)
                             self.bullets.add(leftbullet)
                             self.bullets.add(rightbullet)
                             self.allSprites.add(self.bullets)
@@ -273,7 +273,7 @@ class SpaceInvaders(object):
                     self.explosionsGroup.add(explosion)
                     self.allSprites.remove(currentSprite)
                     self.mysteryGroup.remove(currentSprite)
-                    newShip = Mystery()
+                    newShip = Mystery(self)
                     self.allSprites.add(newShip)
                     self.mysteryGroup.add(newShip)
                     break

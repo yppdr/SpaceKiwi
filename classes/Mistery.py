@@ -3,7 +3,8 @@ from pygame import *
 from constant import *
 
 class Mystery(sprite.Sprite):
-    def __init__(self):
+    def __init__(self, game):
+        self.game = game
         sprite.Sprite.__init__(self)
         self.image = IMAGES['mystery']
         self.image = transform.scale(self.image, (75, 35))
@@ -26,11 +27,11 @@ class Mystery(sprite.Sprite):
             if self.rect.x < 840 and self.direction == 1:
                 self.mysteryEntered.fadeout(4000)
                 self.rect.x += 2
-                game.screen.blit(self.image, self.rect)
+                self.game.screen.blit(self.image, self.rect)
             if self.rect.x > -100 and self.direction == -1:
                 self.mysteryEntered.fadeout(4000)
                 self.rect.x -= 2
-                game.screen.blit(self.image, self.rect)
+                self.game.screen.blit(self.image, self.rect)
 
         if self.rect.x > 830:
             self.playSound = True

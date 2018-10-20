@@ -1,6 +1,9 @@
+import platform
+
 from pygame import *
 
 from constant import *
+import os
 
 class Ship(sprite.Sprite):
     def __init__(self, game):
@@ -11,12 +14,32 @@ class Ship(sprite.Sprite):
         self.speed = 5
 
     def update(self, keys, *args):
-        if keys[K_LEFT] and self.rect.x > 10:
-            self.rect.x -= self.speed
-        if keys[K_RIGHT] and self.rect.x < 740:
-            self.rect.x += self.speed
-        if keys[K_UP] and self.rect.x > 10:
-            self.rect.y -= self.speed
-        if keys[K_DOWN] and self.rect.x < 740:
-            self.rect.y += self.speed
+        if platform.system() == 'Windows':
+            if keys[K_q]:
+                self.image = transform.rotate(self.image, -90)
+            if keys[K_e]:
+                self.image = transform.rotate(self.image, 90)
+            if keys[K_a] and self.rect.x > 10:
+                self.rect.x -= self.speed
+            if keys[K_d] and self.rect.x < 740:
+                self.rect.x += self.speed
+            if keys[K_w] and self.rect.y > 10:
+                self.rect.y -= self.speed
+            if keys[K_s] and self.rect.y < 550:
+                self.rect.y += self.speed
+        else:
+            if keys[K_a]:
+                self.image = transform.rotate(self.image, -90)
+                print(self.image)
+            if keys[K_e]:
+                self.image = transform.rotate(self.image, 90)
+            if keys[K_q] and self.rect.x > 10:
+                self.rect.x -= self.speed
+            if keys[K_d] and self.rect.x < 740:
+                self.rect.x += self.speed
+            if keys[K_z] and self.rect.y > 10:
+                self.rect.y -= self.speed
+            if keys[K_s] and self.rect.y < 550:
+                self.rect.y += self.speed
+
         self.game.screen.blit(self.image, self.rect)
