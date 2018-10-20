@@ -11,7 +11,7 @@ class Explosion(sprite.Sprite):
         if mystery:
             self.text = Text(FONT, 20, str(score), WHITE, xpos + 20, ypos + 6)
         elif ship:
-            self.image = IMAGES['ship']
+            self.image = IMAGES[SHIP]
             self.rect = self.image.get_rect(topleft=(xpos, ypos))
         else:
             self.row = row
