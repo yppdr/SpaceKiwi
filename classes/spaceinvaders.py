@@ -19,6 +19,8 @@ from Explosion import *
 from Life import *
 from Mistery import *
 from Text import *
+import winsound
+
 
 class SpaceInvaders(object):
     def __init__(self):
@@ -96,7 +98,7 @@ class SpaceInvaders(object):
 
     def create_audio(self):
         self.sounds = {}
-        for sound_name in ['shoot', 'shoot2', 'invaderkilled', 'mysterykilled',
+        for sound_name in ['shoot', 'shoot3', 'invaderkilled', 'mysterykilled',
                            'shipexplosion']:
             self.sounds[sound_name] = mixer.Sound(
                 SOUND_PATH + '{}.wav'.format(sound_name))
@@ -105,9 +107,11 @@ class SpaceInvaders(object):
         self.musicNotes = [mixer.Sound(SOUND_PATH + '{}.wav'.format(i)) for i
                            in range(4)]
         for sound in self.musicNotes:
-            sound.set_volume(0.5)
+            sound.set_volume(0.8)
 
         self.noteIndex = 0
+
+        winsound.PlaySound("sebastien", winsound.SND_ASYNC | winsound.SND_ALIAS)
 
     def play_main_music(self, currentTime):
         moveTime = self.enemies.sprites()[0].moveTime
@@ -164,7 +168,7 @@ class SpaceInvaders(object):
                             self.bullets.add(leftbullet)
                             self.bullets.add(rightbullet)
                             self.allSprites.add(self.bullets)
-                            self.sounds['shoot2'].play()
+                            self.sounds['shoot3'].play()
                         else :
                             leftbullet = Bullet(self.player.rect.x + 8,
                                                 self.player.rect.y + 5, -1,
@@ -180,7 +184,8 @@ class SpaceInvaders(object):
                             self.bullets.add(rightbullet)
                             self.bullets.add(centerbullet)
                             self.allSprites.add(self.bullets)
-                            self.sounds['shoot2'].play()
+                            self.sounds['shoot3'].play()
+
 
     def make_enemies(self):
         enemies = EnemiesGroup(10, 5)
@@ -406,7 +411,6 @@ class SpaceInvaders(object):
                     self.check_collisions()
                     self.create_new_ship(self.makeNewShip, currentTime)
                     self.update_enemy_speed()
-
                     if len(self.enemies) > 0:
                         self.make_enemies_shoot()
 
