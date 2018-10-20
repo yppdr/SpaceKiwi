@@ -1,7 +1,7 @@
 from pygame import *
 
+from Text import *
 from constant import *
-
 class Explosion(sprite.Sprite):
     def __init__(self, xpos, ypos, row, ship, mystery, score, game):
         sprite.Sprite.__init__(self)
