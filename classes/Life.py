@@ -1,6 +1,5 @@
 from pygame import *
 
-from spaceinvaders import *
 from constant import *
 
 class Life(sprite.Sprite):
