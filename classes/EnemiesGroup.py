@@ -1,6 +1,7 @@
 from pygame import *
 
 from constant import *
+from random import *
 
 class EnemiesGroup(sprite.Group):
     def __init__(self, columns, rows):
