@@ -19,6 +19,8 @@ from Explosion import *
 from Life import *
 from Mistery import *
 from Text import *
+import winsound
+
 
 class SpaceInvaders(object):
     def __init__(self):
@@ -32,6 +34,7 @@ class SpaceInvaders(object):
         self.startGame = False
         self.mainScreen = True
         self.gameOver = False
+        self.boss = 0
         # Initial value for a new game
         self.enemyPositionDefault = 65
         # Counter for enemy starting position (increased each new round)
@@ -96,7 +99,7 @@ class SpaceInvaders(object):
 
     def create_audio(self):
         self.sounds = {}
-        for sound_name in ['shoot', 'shoot2', 'invaderkilled', 'mysterykilled',
+        for sound_name in ['shoot', 'shoot3', 'invaderkilled', 'mysterykilled',
                            'shipexplosion']:
             self.sounds[sound_name] = mixer.Sound(
                 SOUND_PATH + '{}.wav'.format(sound_name))
@@ -105,9 +108,11 @@ class SpaceInvaders(object):
         self.musicNotes = [mixer.Sound(SOUND_PATH + '{}.wav'.format(i)) for i
                            in range(4)]
         for sound in self.musicNotes:
-            sound.set_volume(0.5)
+            sound.set_volume(0.8)
 
         self.noteIndex = 0
+
+        winsound.PlaySound("sebastien", winsound.SND_ASYNC | winsound.SND_ALIAS)
 
     def play_main_music(self, currentTime):
         moveTime = self.enemies.sprites()[0].moveTime
@@ -149,47 +154,59 @@ class SpaceInvaders(object):
                     if len(self.bullets) == 0 and self.shipAlive:
                         if SHIP == '1':
                             bullet = Bullet(self.player.rect.x + 23,
-                                            self.player.rect.y + 5, -1,
-                                            15, 'laser', 'center', self)
+                                            self.player.rect.y + 5, self.player.orientation,
+                                            15, 'laser', 'center', self, )
                             self.bullets.add(bullet)
                             self.allSprites.add(self.bullets)
                             self.sounds['shoot'].play()
                         elif SHIP == '2':
                             leftbullet = Bullet(self.player.rect.x + 8,
-                                                self.player.rect.y + 5, -1,
+                                                self.player.rect.y + 5, self.player.orientation,
                                                 15, 'laser', 'left', self)
                             rightbullet = Bullet(self.player.rect.x + 38,
-                                                 self.player.rect.y + 5, -1,
+                                                 self.player.rect.y + 5, self.player.orientation,
                                                  15, 'laser', 'right', self)
                             self.bullets.add(leftbullet)
                             self.bullets.add(rightbullet)
                             self.allSprites.add(self.bullets)
-                            self.sounds['shoot2'].play()
+                            self.sounds['shoot3'].play()
                         else :
                             leftbullet = Bullet(self.player.rect.x + 8,
-                                                self.player.rect.y + 5, -1,
+                                                self.player.rect.y + 5, self.player.orientation,
                                                 15, 'laser', 'left', self)
                             rightbullet = Bullet(self.player.rect.x + 38,
-                                                 self.player.rect.y + 5, -1,
+                                                 self.player.rect.y + 5, self.player.orientation,
                                                  15, 'laser', 'right', self)
                             centerbullet = Bullet(self.player.rect.x + 38,
-                                                 self.player.rect.y + 5, -1,
+                                                 self.player.rect.y + 5, self.player.orientation,
                                                  30, 'laser', 'top', self)
 
                             self.bullets.add(leftbullet)
                             self.bullets.add(rightbullet)
                             self.bullets.add(centerbullet)
                             self.allSprites.add(self.bullets)
-                            self.sounds['shoot2'].play()
+                            self.sounds['shoot3'].play()
+
 
     def make_enemies(self):
-        enemies = EnemiesGroup(10, 5)
-        for row in range(5):
-            for column in range(10):
-                enemy = Enemy(row, column, self)
-                enemy.rect.x = 157 + (column * 50)
-                enemy.rect.y = self.enemyPosition + (row * 45)
-                enemies.add(enemy)
+
+        if self.boss == 1:
+            enemies = EnemiesGroup(10, 5)
+            for row in range(5):
+                for column in range(10):
+                    enemy = Enemy(row, column, self)
+                    enemy.rect.x = 157 + (column * 1)
+                    enemy.rect.y = self.enemyPosition + (row * 1)
+                    enemies.add(enemy)
+
+        else :
+            enemies = EnemiesGroup(10, 5)
+            for row in range(5):
+                for column in range(10):
+                    enemy = Enemy(row, column, self)
+                    enemy.rect.x = 157 + (column * 50)
+                    enemy.rect.y = self.enemyPosition + (row * 45)
+                    enemies.add(enemy)
 
         self.enemies = enemies
         self.allSprites = sprite.Group(self.player, self.enemies,
@@ -199,6 +216,7 @@ class SpaceInvaders(object):
         if (time.get_ticks() - self.timer) > 700:
             enemy = self.enemies.random_bottom()
             if enemy:
+                # TODO ennemie shot
                 self.enemyBullets.add(
                     Bullet(enemy.rect.x + 14, enemy.rect.y + 20, 1, 5,
                            'enemylaser', 'center', self))
@@ -406,9 +424,9 @@ class SpaceInvaders(object):
                     self.check_collisions()
                     self.create_new_ship(self.makeNewShip, currentTime)
                     self.update_enemy_speed()
-
                     if len(self.enemies) > 0:
                         self.make_enemies_shoot()
+                        self.boss = 1
 
             elif self.gameOver:
                 currentTime = time.get_ticks()
