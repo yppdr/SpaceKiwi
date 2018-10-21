@@ -211,14 +211,26 @@ class SpaceInvaders(object):
                     print(self.enemyPosition)
                     enemies.add(enemy)
 
-        else :
-            enemies = EnemiesGroup(10, 5)
-            for row in range(5):
-                for column in range(10):
-                    enemy = Enemy(row, column, self)
-                    enemy.rect.x = randint(0, 750)
-                    enemy.rect.y = randint(100, 400)
-                    enemies.add(enemy)
+        else:
+            mobs_grp_choice = randint(0, 1)
+            if mobs_grp_choice == 0:
+                self.mobs_shape = "EXPLODED"
+                enemies = EnemiesGroup(10, 5)
+                for row in range(5):
+                    for column in range(10):
+                        enemy = Enemy(row, column, self)
+                        enemy.rect.x = randint(0, 750)
+                        enemy.rect.y = randint(100, 400)
+                        enemies.add(enemy)
+            else:
+                self.mobs_shape = "GROUP"
+                enemies = EnemiesGroup(10, 5)
+                for row in range(5):
+                    for column in range(10):
+                        enemy = Enemy(row, column, self)
+                        enemy.rect.x = 157 + (column * 50)
+                        enemy.rect.y = self.enemyPosition + (row * 45)
+                        enemies.add(enemy)
 
         self.enemies = enemies
         self.allSprites = sprite.Group(self.player, self.enemies,
