@@ -208,6 +208,7 @@ class SpaceInvaders(object):
                     enemy = Enemy(row, column, self)
                     enemy.rect.x = 157 + (column * 1)
                     enemy.rect.y = self.enemyPosition + (row * 1)
+                    print(self.enemyPosition)
                     enemies.add(enemy)
 
         else :
@@ -215,8 +216,8 @@ class SpaceInvaders(object):
             for row in range(5):
                 for column in range(10):
                     enemy = Enemy(row, column, self)
-                    enemy.rect.x = 157 + (column * 50)
-                    enemy.rect.y = self.enemyPosition + (row * 45)
+                    enemy.rect.x = randint(0, 750)
+                    enemy.rect.y = randint(100, 400)
                     enemies.add(enemy)
 
         self.enemies = enemies
