@@ -14,8 +14,35 @@ class Ship(sprite.Sprite):
         self.rect = self.image.get_rect(topleft=(375, 540))
         self.speed = 5
         self.orientation = 'UP'
+        self.placement = 'BOTTOM'
 
     def update(self, keys, *args):
+
+        if args[1].shape == 'GROUP':
+            xposMob = args[1].enemies[0][0].rect.x
+            yposMob = args[1].enemies[0][0].rect.y
+            xpos = self.rect.x
+            ypos = self.rect.y
+            if xpos < xposMob and ypos > yposMob and ypos < yposMob + 250:
+                self.placement = 'LEFT_SIDE'
+            elif xpos > xposMob + 500 and ypos > yposMob and ypos < yposMob + 250:
+                self.placement = 'RIGHT_SIDE'
+            elif ypos < yposMob:
+                self.placement = 'ABOVE'
+            else:
+                self.placement = 'BOTTOM'
+            print self.placement
+        else:
+            random_placement = randint(0, 4)
+            if random_placement == 0:
+                self.placement = 'BOTTOM'
+            elif random_placement == 1:
+                self.placement = 'LEFT_SIDE'
+            elif random_placement == 2:
+                self.placement = 'ABOVE'
+            elif random_placement == 3:
+                self.placement = 'RIGHT_SIDE'
+
         if platform.system() == 'Windows':
             if keys[K_q]:
                 self.image = transform.rotate(self.image, -90)

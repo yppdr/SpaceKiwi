@@ -19,8 +19,11 @@ from Explosion import *
 from Life import *
 from Mistery import *
 from Text import *
-#import winsound
+if platform.system() == 'Windows':
+    import winsound
 
+
+# 3 ETATS BOS BOSS MECHANT TOUCHER MORT + DESIGN DES NIVEAU ( 3 )
 
 class SpaceInvaders(object):
     def __init__(self):
@@ -30,11 +33,13 @@ class SpaceInvaders(object):
         init()
         self.caption = display.set_caption('Space Invaders')
         self.screen = SCREEN
-        self.background = image.load(IMAGE_PATH + 'background1.jpg').convert()
+        self.background = image.load(IMAGE_PATH + 'base1.png').convert()
         self.startGame = False
         self.mainScreen = True
         self.gameOver = False
         self.boss = 0
+        # Enum between GROUP, EXPLODED and BOSS
+        self.mobs_shape = 'GROUP'
         # Initial value for a new game
         self.enemyPositionDefault = 65
         # Counter for enemy starting position (increased each new round)
@@ -72,28 +77,20 @@ class SpaceInvaders(object):
         self.shipAlive = True
 
     def make_blockers(self, number):
-        posblock = [1, 2, 3, 4]
         blockerGroup = sprite.Group()
-        for row in range(randint(2, 5)):
+        """for row in range(randint(10, 20)):
+            for column in range(randint(50, 100)):
+                blocker = Blocker(randint(10, 18), BLACK, row, column, self)
+                blocker.rect.x = randint(50, 750) + (200 * number) + (column * blocker.width)
+                blocker.rect.y = randint(50, 550) + (row * blocker.height)"""
+
+        for row in range(randint(5, 10)):
             for column in range(randint(5, 10)):
-                blocker = Blocker(randint(5, 18), GREEN, row, column, self)
-                for pos in range(posblock[0], posblock[3]):
-                    if pos == 1:
-                        blocker.rect.x = randint(50, 350) + (200 * number) + (column * blocker.width)
-                        blocker.rect.y = randint(50, 250) + (row * blocker.height)
-                        blockerGroup.add(blocker)
-                    elif pos == 2:
-                        blocker.rect.x = randint(350, 750) + (200 * number) + (column * blocker.width)
-                        blocker.rect.y = randint(50, 250) + (row * blocker.height)
-                        blockerGroup.add(blocker)
-                    elif pos == 3:
-                        blocker.rect.x = randint(50, 350) + (200 * number) + (column * blocker.width)
-                        blocker.rect.y = randint(350, 550) + (row * blocker.height)
-                        blockerGroup.add(blocker)
-                    elif pos == 4:
-                        blocker.rect.x = randint(350, 750) + (200 * number) + (column * blocker.width)
-                        blocker.rect.y = randint(350, 550) + (row * blocker.height)
-                        blockerGroup.add(blocker)
+                blocker = Blocker(randint(10, 18), BLACK, row, column, self)
+                blocker.rect.x = randint(50, 750)
+                blocker.rect.y = randint(50, 550)
+                blockerGroup.add(blocker)
+
         return blockerGroup
 
     def reset_lives_sprites(self):
@@ -127,7 +124,8 @@ class SpaceInvaders(object):
 
         self.noteIndex = 0
 
-        #winsound.PlaySound("sebastien", winsound.SND_ASYNC | winsound.SND_ALIAS)
+        if platform.system() == 'Windows':
+            winsound.PlaySound("sebastien", winsound.SND_ASYNC | winsound.SND_ALIAS)
 
     def play_main_music(self, currentTime):
         moveTime = self.enemies.sprites()[0].moveTime
@@ -170,7 +168,7 @@ class SpaceInvaders(object):
                         if SHIP == '1':
                             bullet = Bullet(self.player.rect.x + 23,
                                             self.player.rect.y + 5, self.player.orientation,
-                                            15, 'laser', 'center', self, )
+                                            15, 'laserkiwi', 'center', self, '')
                             self.bullets.add(bullet)
                             self.allSprites.add(self.bullets)
                             self.sounds['shoot'].play()
@@ -178,10 +176,10 @@ class SpaceInvaders(object):
                         elif SHIP == '2':
                             leftbullet = Bullet(self.player.rect.x + 8,
                                                 self.player.rect.y + 5, self.player.orientation,
-                                                15, 'laser', 'left', self)
+                                                15, 'laserfraise', 'left', self, '')
                             rightbullet = Bullet(self.player.rect.x + 38,
                                                  self.player.rect.y + 5, self.player.orientation,
-                                                 15, 'laser', 'right', self)
+                                                 15, 'laserfraise', 'right', self, '')
                             self.bullets.add(leftbullet)
                             self.bullets.add(rightbullet)
                             self.allSprites.add(self.bullets)
@@ -189,13 +187,13 @@ class SpaceInvaders(object):
                         else :
                             leftbullet = Bullet(self.player.rect.x + 8,
                                                 self.player.rect.y + 5, self.player.orientation,
-                                                15, 'laser', 'left', self)
+                                                15, 'laserbanane', 'left', self, '')
                             rightbullet = Bullet(self.player.rect.x + 38,
                                                  self.player.rect.y + 5, self.player.orientation,
-                                                 15, 'laser', 'right', self)
+                                                 15, 'laserbanane', 'right', self, '')
                             centerbullet = Bullet(self.player.rect.x + 38,
                                                  self.player.rect.y + 5, self.player.orientation,
-                                                 30, 'laser', 'top', self)
+                                                 30, 'laserbanane', 'top', self, '')
 
                             self.bullets.add(leftbullet)
                             self.bullets.add(rightbullet)
@@ -206,8 +204,9 @@ class SpaceInvaders(object):
 
     def make_enemies(self):
 
-        if self.boss == 1:
-            enemies = EnemiesGroup(10, 5)
+        if self.boss %2 == 1:
+            self.mobs_shape = 'BOSS'
+            enemies = EnemiesGroup(10, 5, 'BOSS')
             for row in range(5):
                 for column in range(10):
                     enemy = Enemy(row, column, self)
@@ -215,22 +214,36 @@ class SpaceInvaders(object):
                     enemy.rect.y = self.enemyPosition + (row * 1)
                     enemies.add(enemy)
 
-        else :
-            enemies = EnemiesGroup(10, 5)
-            for row in range(5):
-                for column in range(10):
-                    enemy = Enemy(row, column, self)
-                    enemy.rect.x = 157 + (column * 50)
-                    enemy.rect.y = self.enemyPosition + (row * 45)
-                    enemies.add(enemy)
+        else:
+            mobs_grp_choice = randint(0, 1)
+            # mobs_grp_choice = 0
+            if mobs_grp_choice == 0:
+                self.mobs_shape = 'EXPLODED'
+                enemies = EnemiesGroup(10, 5, 'EXPLODED')
+                for row in range(5):
+                    for column in range(10):
+                        enemy = Enemy(row, column, self)
+                        enemy.rect.x = randint(0, 750)
+                        enemy.rect.y = randint(100, 400)
+                        enemies.add(enemy)
+            else:
+                self.mobs_shape = 'GROUP'
+                enemies = EnemiesGroup(10, 5, 'GROUP')
+                for row in range(5):
+                    for column in range(10):
+                        enemy = Enemy(row, column, self)
+                        enemy.rect.x = 157 + (column * 50)
+                        enemy.rect.y = self.enemyPosition + (row * 45)
+                        enemies.add(enemy)
 
         self.enemies = enemies
         self.allSprites = sprite.Group(self.player, self.enemies,
                                        self.livesGroup, self.mysteryShip)
 
     def make_enemies_shoot(self):
+        # TODO frequence shot
         if (time.get_ticks() - self.timer) > 700:
-            enemy = self.enemies.random_bottom()
+            enemy = self.enemies.random_shooter(self.player.placement)
             if enemy:
                 # TODO ennemie shot
                 rotationTire = ""
@@ -245,10 +258,30 @@ class SpaceInvaders(object):
                 elif 135<= posJoueur[0] <= 615 and posJoueur[1] == 10:
                     rotationTire = "UP"
                 self.enemyBullets.add(
-                    Bullet(enemy.rect.x + 14, enemy.rect.y + 20, rotationTire, 5,
-                           'enemylaser', 'center', self))
+                    Bullet(enemy.rect.x + 14, enemy.rect.y + 20, 1, 5,
+                           'enemylaser', 'center', self, self.player.placement))
                 self.allSprites.add(self.enemyBullets)
                 self.timer = time.get_ticks()
+
+                # TODO add second shot en fonction du lvl
+
+                if self.mobs_shape == 'EXPLODED':
+                    self.enemyBullets.add(
+                        Bullet(enemy.rect.x + 14, enemy.rect.y + 20, 1, 5,
+                            'enemylaser', 'center', self, 'BOTTOM'))
+                    self.allSprites.add(self.enemyBullets)
+                    self.timer = time.get_ticks()
+                    self.enemyBullets.add(
+                        Bullet(enemy.rect.x + 14, enemy.rect.y + 20, 1, 5,
+                            'enemylaser', 'center', self, 'LEFT_SIDE'))
+                    self.allSprites.add(self.enemyBullets)
+                    self.timer = time.get_ticks()
+                    self.enemyBullets.add(
+                        Bullet(enemy.rect.x + 14, enemy.rect.y + 20, 1, 5,
+                            'enemylaser', 'center', self, 'RIGHT_SIDE'))
+                    self.allSprites.add(self.enemyBullets)
+                    self.timer = time.get_ticks()
+
 
     def calculate_score(self, row):
         scores = {0: 30,
