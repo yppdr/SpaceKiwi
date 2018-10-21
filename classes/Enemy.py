@@ -22,25 +22,7 @@ class Enemy(sprite.Sprite):
 
     def update(self, keys, currentTime, enemies):
         if currentTime - self.timer > self.moveTime:
-            if self.direction == 1:
-                maxMove = self.rightMoves + enemies.rightAddMove
-            else:
-                maxMove = self.leftMoves + enemies.leftAddMove
 
-            if self.moveNumber >= maxMove:
-                if self.direction == 1:
-                    self.leftMoves = 30 + enemies.rightAddMove
-                elif self.direction == -1:
-                    self.rightMoves = 30 + enemies.leftAddMove
-                self.direction *= -1
-                self.moveNumber = 0
-                self.rect.y += 35
-            elif self.direction == 1:
-                self.rect.x += 10
-                self.moveNumber += 1
-            elif self.direction == -1:
-                self.rect.x -= 10
-                self.moveNumber += 1
 
             self.index += 1
             if self.index >= len(self.images):
