@@ -19,7 +19,7 @@ from Explosion import *
 from Life import *
 from Mistery import *
 from Text import *
-import winsound
+#import winsound
 
 
 class SpaceInvaders(object):
@@ -127,7 +127,7 @@ class SpaceInvaders(object):
 
         self.noteIndex = 0
 
-        winsound.PlaySound("sebastien", winsound.SND_ASYNC | winsound.SND_ALIAS)
+        #winsound.PlaySound("sebastien", winsound.SND_ASYNC | winsound.SND_ALIAS)
 
     def play_main_music(self, currentTime):
         moveTime = self.enemies.sprites()[0].moveTime
@@ -174,6 +174,7 @@ class SpaceInvaders(object):
                             self.bullets.add(bullet)
                             self.allSprites.add(self.bullets)
                             self.sounds['shoot'].play()
+                            self.background = image.load(IMAGE_PATH + '').convert()
                         elif SHIP == '2':
                             leftbullet = Bullet(self.player.rect.x + 8,
                                                 self.player.rect.y + 5, self.player.orientation,
@@ -232,8 +233,19 @@ class SpaceInvaders(object):
             enemy = self.enemies.random_bottom()
             if enemy:
                 # TODO ennemie shot
+                rotationTire = ""
+                #Tranqueur de la position du joueur
+                posJoueur = self.player.rect.copy()
+
+                #Changement de la rotation en fonction de la position du vaisseau
+                if  10<= posJoueur[0] <= 115 and 40<=posJoueur[1] <= 265:
+                    rotationTire = "RIGHT"
+                elif 655<= posJoueur[0] <= 740 and 35<=posJoueur[1] <= 250:
+                    rotationTire = "LEFT"
+                elif 135<= posJoueur[0] <= 615 and posJoueur[1] == 10:
+                    rotationTire = "UP"
                 self.enemyBullets.add(
-                    Bullet(enemy.rect.x + 14, enemy.rect.y + 20, 1, 5,
+                    Bullet(enemy.rect.x + 14, enemy.rect.y + 20, rotationTire, 5,
                            'enemylaser', 'center', self))
                 self.allSprites.add(self.enemyBullets)
                 self.timer = time.get_ticks()
@@ -347,6 +359,7 @@ class SpaceInvaders(object):
                     elif self.lives == 0:
                         self.gameOver = True
                         self.startGame = False
+                        self.boss = 0
                     self.sounds['shipexplosion'].play()
                     explosion = Explosion(playerShip.rect.x, playerShip.rect.y,
                                           0, True, False, 0, self)
@@ -357,10 +370,11 @@ class SpaceInvaders(object):
                     self.shipTimer = time.get_ticks()
                     self.shipAlive = False
 
+
         if sprite.groupcollide(self.enemies, self.playerGroup, True, True):
             self.gameOver = True
             self.startGame = False
-
+            self.boss = 0
         sprite.groupcollide(self.bullets, self.allBlockers, True, True)
         sprite.groupcollide(self.enemyBullets, self.allBlockers, True, True)
         sprite.groupcollide(self.enemies, self.allBlockers, False, True)
@@ -444,6 +458,7 @@ class SpaceInvaders(object):
                         self.boss = 1
 
             elif self.gameOver:
+                self.boss = 0
                 currentTime = time.get_ticks()
                 # Reset enemy starting position
                 self.enemyPositionStart = self.enemyPositionDefault
