@@ -112,7 +112,7 @@ class SpaceInvaders(object):
     def create_audio(self):
         self.sounds = {}
         for sound_name in ['shoot', 'shoot3', 'invaderkilled', 'mysterykilled',
-                           'shipexplosion']:
+                           'shipexplosion', 'go']:
             self.sounds[sound_name] = mixer.Sound(
                 SOUND_PATH + '{}.wav'.format(sound_name))
             self.sounds[sound_name].set_volume(0.2)
@@ -496,7 +496,7 @@ class SpaceInvaders(object):
                 # Reset enemy starting position
                 self.enemyPositionStart = self.enemyPositionDefault
                 self.create_game_over(currentTime)
-
+                self.sounds['go'].play()
             display.update()
             self.clock.tick(60)
 
