@@ -3,7 +3,7 @@ from pygame import *
 from constant import *
 
 class Bullet(sprite.Sprite):
-    def __init__(self, xpos, ypos, orientation, speed, filename, side, game):
+    def __init__(self, xpos, ypos, orientation, speed, filename, side, game, placement):
         sprite.Sprite.__init__(self)
         self.game = game
         self.image = IMAGES[filename]
@@ -12,6 +12,16 @@ class Bullet(sprite.Sprite):
         self.orientation = orientation
         self.side = side
         self.filename = filename
+        # self.player = player
+        if filename == 'enemylaser':
+            if placement == 'LEFT_SIDE':
+                self.orientation = 'RIGHT'
+            elif placement == 'RIGHT_SIDE':
+                self.orientation = 'LEFT'
+            elif placement == 'ABOVE':
+                self.orientation = 'UP'
+            elif placement == 'BOTTOM':
+                self.orientation = 'DOWN'
 
     def update(self, keys, *args):
         self.game.screen.blit(self.image, self.rect)
@@ -25,8 +35,6 @@ class Bullet(sprite.Sprite):
             self.rect.y += self.speed
         elif self.orientation == 'RIGHT':
             self.rect.x += self.speed * -1
-        else:
-            self.rect.y += self.speed
 
         if self.rect.y < 15 or self.rect.y > 600 or self.rect.x < 15 or self.rect.x > 800:
             self.kill()

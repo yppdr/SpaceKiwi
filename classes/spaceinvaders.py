@@ -19,7 +19,7 @@ from Explosion import *
 from Life import *
 from Mistery import *
 from Text import *
-import winsound
+# import winsound
 
 
 class SpaceInvaders(object):
@@ -111,7 +111,7 @@ class SpaceInvaders(object):
 
         self.noteIndex = 0
 
-        winsound.PlaySound("sebastien", winsound.SND_ASYNC | winsound.SND_ALIAS)
+        # winsound.PlaySound("sebastien", winsound.SND_ASYNC | winsound.SND_ALIAS)
 
     def play_main_music(self, currentTime):
         moveTime = self.enemies.sprites()[0].moveTime
@@ -154,17 +154,17 @@ class SpaceInvaders(object):
                         if SHIP == '1':
                             bullet = Bullet(self.player.rect.x + 23,
                                             self.player.rect.y + 5, self.player.orientation,
-                                            15, 'laser', 'center', self, )
+                                            15, 'laser', 'center', self, self.player)
                             self.bullets.add(bullet)
                             self.allSprites.add(self.bullets)
                             self.sounds['shoot'].play()
                         elif SHIP == '2':
                             leftbullet = Bullet(self.player.rect.x + 8,
                                                 self.player.rect.y + 5, self.player.orientation,
-                                                15, 'laser', 'left', self)
+                                                15, 'laser', 'left', self, self.player)
                             rightbullet = Bullet(self.player.rect.x + 38,
                                                  self.player.rect.y + 5, self.player.orientation,
-                                                 15, 'laser', 'right', self)
+                                                 15, 'laser', 'right', self, self.player)
                             self.bullets.add(leftbullet)
                             self.bullets.add(rightbullet)
                             self.allSprites.add(self.bullets)
@@ -172,13 +172,13 @@ class SpaceInvaders(object):
                         else :
                             leftbullet = Bullet(self.player.rect.x + 8,
                                                 self.player.rect.y + 5, self.player.orientation,
-                                                15, 'laser', 'left', self)
+                                                15, 'laser', 'left', self, self.player)
                             rightbullet = Bullet(self.player.rect.x + 38,
                                                  self.player.rect.y + 5, self.player.orientation,
-                                                 15, 'laser', 'right', self)
+                                                 15, 'laser', 'right', self, self.player)
                             centerbullet = Bullet(self.player.rect.x + 38,
                                                  self.player.rect.y + 5, self.player.orientation,
-                                                 30, 'laser', 'top', self)
+                                                 30, 'laser', 'top', self, self.player)
 
                             self.bullets.add(leftbullet)
                             self.bullets.add(rightbullet)
@@ -201,13 +201,15 @@ class SpaceInvaders(object):
                                        self.livesGroup, self.mysteryShip)
 
     def make_enemies_shoot(self):
+        # TODO frequence shot
         if (time.get_ticks() - self.timer) > 700:
-            enemy = self.enemies.random_bottom()
+            # enemy = self.enemies.random_bottom(self, self.player.placement)
+            enemy = self.enemies.random_shooter(self.player.placement)
             if enemy:
                 # TODO ennemie shot
                 self.enemyBullets.add(
                     Bullet(enemy.rect.x + 14, enemy.rect.y + 20, 1, 5,
-                           'enemylaser', 'center', self))
+                           'enemylaser', 'center', self, self.player.placement))
                 self.allSprites.add(self.enemyBullets)
                 self.timer = time.get_ticks()
 

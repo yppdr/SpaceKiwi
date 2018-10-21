@@ -28,14 +28,43 @@ class EnemiesGroup(sprite.Group):
                 return False
         return True
 
-    def random_bottom(self):
+    def random_bottom(self, placement):
         random_index = randint(0, len(self._aliveColumns) - 1)
+        # print(self._aliveColumns)
         col = self._aliveColumns[random_index]
         for row in range(self.rows, 0, -1):
             enemy = self.enemies[row - 1][col]
             if enemy:
                 return enemy
         return None
+
+    def random_shooter(self, placement):
+        if placement == 'BOTTOM':
+            random_index = randint(0, len(self._aliveColumns) - 1)
+            col = self._aliveColumns[random_index]
+            for row in range(self.rows, 0, -1):
+                enemy = self.enemies[row - 1][col]
+                if enemy:
+                    return enemy
+            return None
+        elif placement == 'ABOVE':
+            random_index = randint(0, len(self._aliveColumns) - 1)
+            col = self._aliveColumns[random_index]
+            for row in range(0, self.rows):
+                enemy = self.enemies[row][col]
+                if enemy:
+                    return enemy
+            return None
+        elif placement == 'LEFT_SIDE':
+            row = randint(0, 4)
+            col = self._aliveColumns[0]
+            enemy = self.enemies[row][col]
+            if enemy:
+                return enemy
+            return None
+        elif placement == 'RIGHT_SIDE':
+            return None
+
 
     def kill(self, enemy):
         # on double hit calls twice for same enemy, so check before
