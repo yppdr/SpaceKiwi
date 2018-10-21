@@ -19,7 +19,8 @@ from Explosion import *
 from Life import *
 from Mistery import *
 from Text import *
-import winsound
+if platform.system() == 'Windows':
+    import winsound
 
 
 # 3 ETATS BOS BOSS MECHANT TOUCHER MORT + DESIGN DES NIVEAU ( 3 )
