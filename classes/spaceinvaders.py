@@ -75,28 +75,20 @@ class SpaceInvaders(object):
         self.shipAlive = True
 
     def make_blockers(self, number):
-        posblock = [1, 2, 3, 4]
         blockerGroup = sprite.Group()
-        for row in range(randint(2, 5)):
+        """for row in range(randint(10, 20)):
+            for column in range(randint(50, 100)):
+                blocker = Blocker(randint(10, 18), BLACK, row, column, self)
+                blocker.rect.x = randint(50, 750) + (200 * number) + (column * blocker.width)
+                blocker.rect.y = randint(50, 550) + (row * blocker.height)"""
+
+        for row in range(randint(5, 10)):
             for column in range(randint(5, 10)):
-                blocker = Blocker(randint(5, 18), GREEN, row, column, self)
-                for pos in range(posblock[0], posblock[3]):
-                    if pos == 1:
-                        blocker.rect.x = randint(50, 350) + (200 * number) + (column * blocker.width)
-                        blocker.rect.y = randint(50, 250) + (row * blocker.height)
-                        blockerGroup.add(blocker)
-                    elif pos == 2:
-                        blocker.rect.x = randint(350, 750) + (200 * number) + (column * blocker.width)
-                        blocker.rect.y = randint(50, 250) + (row * blocker.height)
-                        blockerGroup.add(blocker)
-                    elif pos == 3:
-                        blocker.rect.x = randint(50, 350) + (200 * number) + (column * blocker.width)
-                        blocker.rect.y = randint(350, 550) + (row * blocker.height)
-                        blockerGroup.add(blocker)
-                    elif pos == 4:
-                        blocker.rect.x = randint(350, 750) + (200 * number) + (column * blocker.width)
-                        blocker.rect.y = randint(350, 550) + (row * blocker.height)
-                        blockerGroup.add(blocker)
+                blocker = Blocker(randint(10, 18), BLACK, row, column, self)
+                blocker.rect.x = randint(50, 750)
+                blocker.rect.y = randint(50, 550)
+                blockerGroup.add(blocker)
+
         return blockerGroup
 
     def reset_lives_sprites(self):
@@ -174,17 +166,28 @@ class SpaceInvaders(object):
                         if SHIP == '1':
                             bullet = Bullet(self.player.rect.x + 23,
                                             self.player.rect.y + 5, self.player.orientation,
+<<<<<<< HEAD
                                             15, 'laser', 'center', self, self.player)
+=======
+                                            15, 'laserkiwi', 'center', self, )
+>>>>>>> 3c9f0130d1d388ed54cf0b7ad2555cab204c67e2
                             self.bullets.add(bullet)
                             self.allSprites.add(self.bullets)
                             self.sounds['shoot'].play()
                         elif SHIP == '2':
                             leftbullet = Bullet(self.player.rect.x + 8,
                                                 self.player.rect.y + 5, self.player.orientation,
+<<<<<<< HEAD
                                                 15, 'laser', 'left', self, self.player)
                             rightbullet = Bullet(self.player.rect.x + 38,
                                                  self.player.rect.y + 5, self.player.orientation,
                                                  15, 'laser', 'right', self, self.player)
+=======
+                                                15, 'laserfraise', 'left', self)
+                            rightbullet = Bullet(self.player.rect.x + 38,
+                                                 self.player.rect.y + 5, self.player.orientation,
+                                                 15, 'laserfraise', 'right', self)
+>>>>>>> 3c9f0130d1d388ed54cf0b7ad2555cab204c67e2
                             self.bullets.add(leftbullet)
                             self.bullets.add(rightbullet)
                             self.allSprites.add(self.bullets)
@@ -192,6 +195,7 @@ class SpaceInvaders(object):
                         else :
                             leftbullet = Bullet(self.player.rect.x + 8,
                                                 self.player.rect.y + 5, self.player.orientation,
+<<<<<<< HEAD
                                                 15, 'laser', 'left', self, self.player)
                             rightbullet = Bullet(self.player.rect.x + 38,
                                                  self.player.rect.y + 5, self.player.orientation,
@@ -199,6 +203,15 @@ class SpaceInvaders(object):
                             centerbullet = Bullet(self.player.rect.x + 38,
                                                  self.player.rect.y + 5, self.player.orientation,
                                                  30, 'laser', 'top', self, self.player)
+=======
+                                                15, 'laserbanane', 'left', self)
+                            rightbullet = Bullet(self.player.rect.x + 38,
+                                                 self.player.rect.y + 5, self.player.orientation,
+                                                 15, 'laserbanane', 'right', self)
+                            centerbullet = Bullet(self.player.rect.x + 38,
+                                                 self.player.rect.y + 5, self.player.orientation,
+                                                 30, 'laserbanane', 'top', self)
+>>>>>>> 3c9f0130d1d388ed54cf0b7ad2555cab204c67e2
 
                             self.bullets.add(leftbullet)
                             self.bullets.add(rightbullet)
@@ -216,6 +229,7 @@ class SpaceInvaders(object):
                     enemy = Enemy(row, column, self)
                     enemy.rect.x = 157 + (column * 1)
                     enemy.rect.y = self.enemyPosition + (row * 1)
+                    print(self.enemyPosition)
                     enemies.add(enemy)
 
         else :
@@ -223,8 +237,8 @@ class SpaceInvaders(object):
             for row in range(5):
                 for column in range(10):
                     enemy = Enemy(row, column, self)
-                    enemy.rect.x = 157 + (column * 50)
-                    enemy.rect.y = self.enemyPosition + (row * 45)
+                    enemy.rect.x = randint(0, 750)
+                    enemy.rect.y = randint(100, 400)
                     enemies.add(enemy)
 
         self.enemies = enemies
