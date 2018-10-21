@@ -27,6 +27,6 @@ IMG_NAMES = [SHIP , 'mystery',
              'enemy2_1', 'enemy2_2',
              'enemy3_1', 'enemy3_2',
              'explosionblue', 'explosiongreen', 'explosionpurple',
-             'laser', 'laserfraise', 'laserbanane', 'laserkiwi', 'enemylaser']
+             'laser', 'laserfraise', 'laserbanane', 'laserkiwi', 'enemylaser','highlaser']
 IMAGES = {name: image.load(IMAGE_PATH + '{}.png'.format(name)).convert_alpha()
           for name in IMG_NAMES}
