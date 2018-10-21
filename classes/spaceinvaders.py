@@ -75,28 +75,20 @@ class SpaceInvaders(object):
         self.shipAlive = True
 
     def make_blockers(self, number):
-        posblock = [1, 2, 3, 4]
         blockerGroup = sprite.Group()
-        for row in range(randint(2, 5)):
+        """for row in range(randint(10, 20)):
+            for column in range(randint(50, 100)):
+                blocker = Blocker(randint(10, 18), GREEN, row, column, self)
+                blocker.rect.x = randint(50, 750) + (200 * number) + (column * blocker.width)
+                blocker.rect.y = randint(50, 550) + (row * blocker.height)"""
+
+        for row in range(randint(5, 10)):
             for column in range(randint(5, 10)):
-                blocker = Blocker(randint(5, 18), GREEN, row, column, self)
-                for pos in range(posblock[0], posblock[3]):
-                    if pos == 1:
-                        blocker.rect.x = randint(50, 350) + (200 * number) + (column * blocker.width)
-                        blocker.rect.y = randint(50, 250) + (row * blocker.height)
-                        blockerGroup.add(blocker)
-                    elif pos == 2:
-                        blocker.rect.x = randint(350, 750) + (200 * number) + (column * blocker.width)
-                        blocker.rect.y = randint(50, 250) + (row * blocker.height)
-                        blockerGroup.add(blocker)
-                    elif pos == 3:
-                        blocker.rect.x = randint(50, 350) + (200 * number) + (column * blocker.width)
-                        blocker.rect.y = randint(350, 550) + (row * blocker.height)
-                        blockerGroup.add(blocker)
-                    elif pos == 4:
-                        blocker.rect.x = randint(350, 750) + (200 * number) + (column * blocker.width)
-                        blocker.rect.y = randint(350, 550) + (row * blocker.height)
-                        blockerGroup.add(blocker)
+                blocker = Blocker(randint(10, 18), GREEN, row, column, self)
+                blocker.rect.x = randint(50, 750)
+                blocker.rect.y = randint(50, 550)
+                blockerGroup.add(blocker)
+
         return blockerGroup
 
     def reset_lives_sprites(self):
