@@ -211,14 +211,14 @@ class SpaceInvaders(object):
                     enemy = Enemy(row, column, self)
                     enemy.rect.x = 157 + (column * 1)
                     enemy.rect.y = self.enemyPosition + (row * 1)
-                    # print(self.enemyPosition)
                     enemies.add(enemy)
 
         else:
             mobs_grp_choice = randint(0, 1)
+            # mobs_grp_choice = 0
             if mobs_grp_choice == 0:
-                self.mobs_shape = "EXPLODED"
-                enemies = EnemiesGroup(10, 5)
+                self.mobs_shape = 'EXPLODED'
+                enemies = EnemiesGroup(10, 5, 'EXPLODED')
                 for row in range(5):
                     for column in range(10):
                         enemy = Enemy(row, column, self)
@@ -226,8 +226,8 @@ class SpaceInvaders(object):
                         enemy.rect.y = randint(100, 400)
                         enemies.add(enemy)
             else:
-                self.mobs_shape = "GROUP"
-                enemies = EnemiesGroup(10, 5)
+                self.mobs_shape = 'GROUP'
+                enemies = EnemiesGroup(10, 5, 'GROUP')
                 for row in range(5):
                     for column in range(10):
                         enemy = Enemy(row, column, self)
@@ -247,12 +247,13 @@ class SpaceInvaders(object):
                 # TODO ennemie shot
                 self.enemyBullets.add(
                     Bullet(enemy.rect.x + 14, enemy.rect.y + 20, 1, 5,
-                           'enemylaser', 'center', self, 'ABOVE'))
+                           'enemylaser', 'center', self, self.player.placement))
                 self.allSprites.add(self.enemyBullets)
                 self.timer = time.get_ticks()
 
                 # TODO add second shot en fonction du lvl
-                if self.mobs_shape:
+
+                if self.mobs_shape == 'EXPLODED':
                     self.enemyBullets.add(
                         Bullet(enemy.rect.x + 14, enemy.rect.y + 20, 1, 5,
                             'enemylaser', 'center', self, 'BOTTOM'))
