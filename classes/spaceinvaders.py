@@ -312,18 +312,18 @@ class SpaceInvaders(object):
         return score
 
     def create_main_menu(self):
-        self.enemy1 = IMAGES['enemy3_1']
+        self.enemy1 = IMAGES['1']
         self.enemy1 = transform.scale(self.enemy1, (40, 40))
-        self.enemy2 = IMAGES['enemy2_2']
+        self.enemy2 = IMAGES['2']
         self.enemy2 = transform.scale(self.enemy2, (40, 40))
-        self.enemy3 = IMAGES['enemy1_2']
+        self.enemy3 = IMAGES['3']
         self.enemy3 = transform.scale(self.enemy3, (40, 40))
-        self.enemy4 = IMAGES['mystery']
-        self.enemy4 = transform.scale(self.enemy4, (80, 40))
+        # self.enemy4 = IMAGES['mystery']
+        # self.enemy4 = transform.scale(self.enemy4, (80, 40))
         self.screen.blit(self.enemy1, (318, 270))
         self.screen.blit(self.enemy2, (318, 320))
         self.screen.blit(self.enemy3, (318, 370))
-        self.screen.blit(self.enemy4, (299, 420))
+        # self.screen.blit(self.enemy4, (299, 420))
 
         for e in event.get():
             if self.should_exit(e):

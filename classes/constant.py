@@ -22,7 +22,7 @@ SHIP = str(randint(1,3))
 
 SCREEN = display.set_mode((800, 600))
 FONT = FONT_PATH + 'space_invaders.ttf'
-IMG_NAMES = [SHIP , 'mystery',
+IMG_NAMES = [SHIP , 'mystery', '1', '2', '3',
              'enemy1_1', 'enemy1_2',
              'enemy2_1', 'enemy2_2',
              'enemy3_1', 'enemy3_2',
