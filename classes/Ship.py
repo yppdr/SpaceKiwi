@@ -31,7 +31,6 @@ class Ship(sprite.Sprite):
                 self.placement = 'ABOVE'
             else:
                 self.placement = 'BOTTOM'
-            print self.placement
         else:
             random_placement = randint(0, 4)
             if random_placement == 0:

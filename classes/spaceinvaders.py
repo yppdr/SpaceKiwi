@@ -18,6 +18,7 @@ from Enemy import *
 from Explosion import *
 from Life import *
 from Mistery import *
+from Highlaser import *
 from Text import *
 if platform.system() == 'Windows':
     import winsound
@@ -52,8 +53,13 @@ class SpaceInvaders(object):
         self.playerGroup = sprite.Group(self.player)
         self.explosionsGroup = sprite.Group()
         self.bullets = sprite.Group()
+        # on appelle la classe du mistery
         self.mysteryShip = Mystery(self)
+        # la classe du super laser
+        self.highlaser = Highlaser(game, self.player.rect.x, self.player.rect.y)
+        #
         self.mysteryGroup = sprite.Group(self.mysteryShip)
+        self.laserGroup = sprite.Group(self.highlaser)
         self.enemyBullets = sprite.Group()
         self.reset_lives(lives)
         self.enemyPosition = self.enemyPositionStart
@@ -124,8 +130,8 @@ class SpaceInvaders(object):
 
         self.noteIndex = 0
 
-        if platform.system() == 'Windows':
-            winsound.PlaySound("sebastien", winsound.SND_ASYNC | winsound.SND_ALIAS)
+        # if platform.system() == 'Windows':
+        #     winsound.PlaySound("sebastien", winsound.SND_ASYNC | winsound.SND_ALIAS)
 
     def play_main_music(self, currentTime):
         moveTime = self.enemies.sprites()[0].moveTime
@@ -203,6 +209,25 @@ class SpaceInvaders(object):
 
     def make_enemies(self):
 
+        laser = sprite.groupcollide(self.bullets, self.mysteryGroup,
+                                    True, True)
+        if laser:
+            for value in mysterydict.values():
+                for currentSprite in value:
+                    currentSprite.mysteryEntered.stop()
+                    self.sounds['mysterykilled'].play()
+                    score = self.calculate_score(currentSprite.row)
+                    explosion = Explosion(currentSprite.rect.x,
+                                          currentSprite.rect.y,
+                                          currentSprite.row, False, True,
+                                          score, self)
+                    self.explosionsGroup.add(explosion)
+                    self.allSprites.remove(currentSprite)
+                    self.laserGroup.remove(currentSprite)
+                    newShip = Highlaser(game, self.player.rect.x, self.player.rect.x)
+                    self.allSprites.add(newShip)
+                    self.laserGroup.add(newShip)
+                    break
         if self.boss %2 == 1:
             self.mobs_shape = 'BOSS'
             enemies = EnemiesGroup(10, 5, 'BOSS')
@@ -237,7 +262,7 @@ class SpaceInvaders(object):
 
         self.enemies = enemies
         self.allSprites = sprite.Group(self.player, self.enemies,
-                                       self.livesGroup, self.mysteryShip)
+                                       self.livesGroup, self.mysteryShip, self.highlaser)
 
     def make_enemies_shoot(self):
         # TODO frequence shot
@@ -313,6 +338,7 @@ class SpaceInvaders(object):
             for enemy in self.enemies:
                 enemy.moveTime = 200
 
+
     def check_collisions(self):
         collidedict = sprite.groupcollide(self.bullets, self.enemyBullets,
                                           True, False)
@@ -342,6 +368,7 @@ class SpaceInvaders(object):
 
         mysterydict = sprite.groupcollide(self.bullets, self.mysteryGroup,
                                           True, True)
+
         if mysterydict:
             for value in mysterydict.values():
                 for currentSprite in value:
@@ -379,6 +406,7 @@ class SpaceInvaders(object):
                         self.allSprites.remove(self.life1)
                     elif self.lives == 0:
                         self.gameOver = True
+                        self.boss = 0
                         self.startGame = False
                     self.sounds['shipexplosion'].play()
                     explosion = Explosion(playerShip.rect.x, playerShip.rect.y,
@@ -481,7 +509,7 @@ class SpaceInvaders(object):
                 # Reset enemy starting position
                 self.enemyPositionStart = self.enemyPositionDefault
                 self.create_game_over(currentTime)
-
+                self.boss = 0
             display.update()
             self.clock.tick(60)
 
