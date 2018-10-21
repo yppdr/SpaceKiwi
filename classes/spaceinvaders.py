@@ -78,13 +78,13 @@ class SpaceInvaders(object):
         blockerGroup = sprite.Group()
         """for row in range(randint(10, 20)):
             for column in range(randint(50, 100)):
-                blocker = Blocker(randint(10, 18), GREEN, row, column, self)
+                blocker = Blocker(randint(10, 18), BLACK, row, column, self)
                 blocker.rect.x = randint(50, 750) + (200 * number) + (column * blocker.width)
                 blocker.rect.y = randint(50, 550) + (row * blocker.height)"""
 
         for row in range(randint(5, 10)):
             for column in range(randint(5, 10)):
-                blocker = Blocker(randint(10, 18), GREEN, row, column, self)
+                blocker = Blocker(randint(10, 18), BLACK, row, column, self)
                 blocker.rect.x = randint(50, 750)
                 blocker.rect.y = randint(50, 550)
                 blockerGroup.add(blocker)
