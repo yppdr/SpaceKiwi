@@ -131,7 +131,7 @@ class SpaceInvaders(object):
         self.noteIndex = 0
         print self.boss
         if platform.system() == 'Windows':
-            if self.boss % 2 == 0:
+            if self.boss % 2 == 1:
                 apero = randint(1,4)
                 winsound.PlaySound(str(apero), winsound.SND_ASYNC | winsound.SND_ALIAS)
             else:
