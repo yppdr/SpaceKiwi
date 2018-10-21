@@ -22,6 +22,8 @@ from Text import *
 import winsound
 
 
+# 3 ETATS BOS BOSS MECHANT TOUCHER MORT + DESIGN DES NIVEAU ( 3 )
+
 class SpaceInvaders(object):
     def __init__(self):
         # It seems, in Linux buffersize=512 is not enough, use 4096 to prevent:
@@ -30,7 +32,7 @@ class SpaceInvaders(object):
         init()
         self.caption = display.set_caption('Space Invaders')
         self.screen = SCREEN
-        self.background = image.load(IMAGE_PATH + 'background1.jpg').convert()
+        self.background = image.load(IMAGE_PATH + 'base1.png').convert()
         self.startGame = False
         self.mainScreen = True
         self.gameOver = False
