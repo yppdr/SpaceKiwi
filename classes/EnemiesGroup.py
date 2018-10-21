@@ -3,7 +3,7 @@ from pygame import *
 from random import *
 
 class EnemiesGroup(sprite.Group):
-    def __init__(self, columns, rows):
+    def __init__(self, columns, rows, shape):
         sprite.Group.__init__(self)
         self.enemies = [[0] * columns for _ in range(rows)]
         self.columns = columns
@@ -15,6 +15,7 @@ class EnemiesGroup(sprite.Group):
         self._rightAliveColumn = columns - 1
         self._leftKilledColumns = 0
         self._rightKilledColumns = 0
+        self.shape = shape
 
     def add(self, *sprites):
         super(sprite.Group, self).add(*sprites)
@@ -28,14 +29,50 @@ class EnemiesGroup(sprite.Group):
                 return False
         return True
 
-    def random_bottom(self):
+    def random_bottom(self, placement):
         random_index = randint(0, len(self._aliveColumns) - 1)
+        # print(self._aliveColumns)
         col = self._aliveColumns[random_index]
         for row in range(self.rows, 0, -1):
             enemy = self.enemies[row - 1][col]
             if enemy:
                 return enemy
         return None
+
+    def random_shooter(self, placement):
+        if placement == 'BOTTOM':
+            random_index = randint(0, len(self._aliveColumns) - 1)
+            col = self._aliveColumns[random_index]
+            for row in range(self.rows, 0, -1):
+                enemy = self.enemies[row - 1][col]
+                if enemy:
+                    return enemy
+            return None
+        elif placement == 'ABOVE':
+            random_index = randint(0, len(self._aliveColumns) - 1)
+            col = self._aliveColumns[random_index]
+            for row in range(0, self.rows):
+                enemy = self.enemies[row][col]
+                if enemy:
+                    return enemy
+            return None
+        elif placement == 'LEFT_SIDE':
+            row = randint(0, 4)
+            col_choose = self._aliveColumns[0]
+            for col in range(col_choose, len(self._aliveColumns) -1):
+                enemy = self.enemies[row][col]
+                if enemy:
+                    return enemy
+            return None
+        elif placement == 'RIGHT_SIDE':
+            row = randint(0, 4)
+            col_choose = self._aliveColumns[len(self._aliveColumns) -1]
+            for col in range(col_choose, 0, -1):
+                enemy = self.enemies[row][col]
+                if enemy:
+                    return enemy
+            return None
+
 
     def kill(self, enemy):
         # on double hit calls twice for same enemy, so check before
