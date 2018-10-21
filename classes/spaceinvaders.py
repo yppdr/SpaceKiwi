@@ -19,8 +19,11 @@ from Explosion import *
 from Life import *
 from Mistery import *
 from Text import *
-# import winsound
+if platform.system() == 'Windows':
+    import winsound
 
+
+# 3 ETATS BOS BOSS MECHANT TOUCHER MORT + DESIGN DES NIVEAU ( 3 )
 
 class SpaceInvaders(object):
     def __init__(self):
@@ -30,10 +33,11 @@ class SpaceInvaders(object):
         init()
         self.caption = display.set_caption('Space Invaders')
         self.screen = SCREEN
-        self.background = image.load(IMAGE_PATH + 'background1.jpg').convert()
+        self.background = image.load(IMAGE_PATH + 'base1.png').convert()
         self.startGame = False
         self.mainScreen = True
         self.gameOver = False
+        self.boss = 0
         # Initial value for a new game
         self.enemyPositionDefault = 65
         # Counter for enemy starting position (increased each new round)
@@ -71,13 +75,28 @@ class SpaceInvaders(object):
         self.shipAlive = True
 
     def make_blockers(self, number):
+        posblock = [1, 2, 3, 4]
         blockerGroup = sprite.Group()
-        for row in range(4):
-            for column in range(9):
-                blocker = Blocker(10, GREEN, row, column, self)
-                blocker.rect.x = 50 + (200 * number) + (column * blocker.width)
-                blocker.rect.y = 450 + (row * blocker.height)
-                blockerGroup.add(blocker)
+        for row in range(randint(2, 5)):
+            for column in range(randint(5, 10)):
+                blocker = Blocker(randint(5, 18), GREEN, row, column, self)
+                for pos in range(posblock[0], posblock[3]):
+                    if pos == 1:
+                        blocker.rect.x = randint(50, 350) + (200 * number) + (column * blocker.width)
+                        blocker.rect.y = randint(50, 250) + (row * blocker.height)
+                        blockerGroup.add(blocker)
+                    elif pos == 2:
+                        blocker.rect.x = randint(350, 750) + (200 * number) + (column * blocker.width)
+                        blocker.rect.y = randint(50, 250) + (row * blocker.height)
+                        blockerGroup.add(blocker)
+                    elif pos == 3:
+                        blocker.rect.x = randint(50, 350) + (200 * number) + (column * blocker.width)
+                        blocker.rect.y = randint(350, 550) + (row * blocker.height)
+                        blockerGroup.add(blocker)
+                    elif pos == 4:
+                        blocker.rect.x = randint(350, 750) + (200 * number) + (column * blocker.width)
+                        blocker.rect.y = randint(350, 550) + (row * blocker.height)
+                        blockerGroup.add(blocker)
         return blockerGroup
 
     def reset_lives_sprites(self):
@@ -111,7 +130,8 @@ class SpaceInvaders(object):
 
         self.noteIndex = 0
 
-        # winsound.PlaySound("sebastien", winsound.SND_ASYNC | winsound.SND_ALIAS)
+        if platform.system() == 'Windows':
+            winsound.PlaySound("sebastien", winsound.SND_ASYNC | winsound.SND_ALIAS)
 
     def play_main_music(self, currentTime):
         moveTime = self.enemies.sprites()[0].moveTime
@@ -188,13 +208,24 @@ class SpaceInvaders(object):
 
 
     def make_enemies(self):
-        enemies = EnemiesGroup(10, 5)
-        for row in range(5):
-            for column in range(10):
-                enemy = Enemy(row, column, self)
-                enemy.rect.x = 157 + (column * 50)
-                enemy.rect.y = self.enemyPosition + (row * 45)
-                enemies.add(enemy)
+
+        if self.boss == 1:
+            enemies = EnemiesGroup(10, 5)
+            for row in range(5):
+                for column in range(10):
+                    enemy = Enemy(row, column, self)
+                    enemy.rect.x = 157 + (column * 1)
+                    enemy.rect.y = self.enemyPosition + (row * 1)
+                    enemies.add(enemy)
+
+        else :
+            enemies = EnemiesGroup(10, 5)
+            for row in range(5):
+                for column in range(10):
+                    enemy = Enemy(row, column, self)
+                    enemy.rect.x = 157 + (column * 50)
+                    enemy.rect.y = self.enemyPosition + (row * 45)
+                    enemies.add(enemy)
 
         self.enemies = enemies
         self.allSprites = sprite.Group(self.player, self.enemies,
@@ -416,6 +447,7 @@ class SpaceInvaders(object):
                     self.update_enemy_speed()
                     if len(self.enemies) > 0:
                         self.make_enemies_shoot()
+                        self.boss = 1
 
             elif self.gameOver:
                 currentTime = time.get_ticks()
