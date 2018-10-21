@@ -15,8 +15,8 @@ class Highlaser(sprite.Sprite):
         self.moveTime = 2000
         self.direction = 1
         self.timer = time.get_ticks()
-        self.mysteryEntered = mixer.Sound(SOUND_PATH + 'mysteryentered.wav')
-        self.mysteryEntered.set_volume(0.1)
+        self.mysteryEntered = mixer.Sound(SOUND_PATH + 'laser.wav')
+        self.mysteryEntered.set_volume(3)
         self.playSound = True
 
     def update(self, keys, currentTime, *args):

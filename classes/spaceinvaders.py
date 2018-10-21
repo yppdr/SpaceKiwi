@@ -209,8 +209,25 @@ class SpaceInvaders(object):
 
     def make_enemies(self):
 
-        # TODO apparition en fonction du lvl
-
+        laser = sprite.groupcollide(self.bullets, self.mysteryGroup,
+                                    True, True)
+        if laser:
+            for value in mysterydict.values():
+                for currentSprite in value:
+                    currentSprite.mysteryEntered.stop()
+                    self.sounds['mysterykilled'].play()
+                    score = self.calculate_score(currentSprite.row)
+                    explosion = Explosion(currentSprite.rect.x,
+                                          currentSprite.rect.y,
+                                          currentSprite.row, False, True,
+                                          score, self)
+                    self.explosionsGroup.add(explosion)
+                    self.allSprites.remove(currentSprite)
+                    self.laserGroup.remove(currentSprite)
+                    newShip = Highlaser(game, self.player.rect.x, self.player.rect.x)
+                    self.allSprites.add(newShip)
+                    self.laserGroup.add(newShip)
+                    break
         if self.boss %2 == 1:
             self.mobs_shape = 'BOSS'
             enemies = EnemiesGroup(10, 5, 'BOSS')
@@ -317,25 +334,7 @@ class SpaceInvaders(object):
         if len(self.enemies) == 1:
             for enemy in self.enemies:
                 enemy.moveTime = 200
-        laser = sprite.groupcollide(self.bullets, self.mysteryGroup,
-                                            True, True)
-        if laser:
-            for value in mysterydict.values():
-                for currentSprite in value:
-                    currentSprite.mysteryEntered.stop()
-                    self.sounds['mysterykilled'].play()
-                    score = self.calculate_score(currentSprite.row)
-                    explosion = Explosion(currentSprite.rect.x,
-                                          currentSprite.rect.y,
-                                          currentSprite.row, False, True,
-                                          score, self)
-                    self.explosionsGroup.add(explosion)
-                    self.allSprites.remove(currentSprite)
-                    self.laserGroup.remove(currentSprite)
-                    newShip = Highlaser(game, self.player.rect.x, self.player.rect.x)
-                    self.allSprites.add(newShip)
-                    self.laserGroup.add(newShip)
-                    break
+
 
     def check_collisions(self):
         collidedict = sprite.groupcollide(self.bullets, self.enemyBullets,
@@ -384,8 +383,6 @@ class SpaceInvaders(object):
                     self.allSprites.add(newShip)
                     self.mysteryGroup.add(newShip)
                     break
-        # print (self.player.rect.x)
-        # print (self.player.rect.y)
 
         bulletsdict = sprite.groupcollide(self.enemyBullets, self.playerGroup,
                                           True, False)
@@ -406,6 +403,7 @@ class SpaceInvaders(object):
                         self.allSprites.remove(self.life1)
                     elif self.lives == 0:
                         self.gameOver = True
+                        self.boss = 0
                         self.startGame = False
                     self.sounds['shipexplosion'].play()
                     explosion = Explosion(playerShip.rect.x, playerShip.rect.y,
@@ -508,7 +506,7 @@ class SpaceInvaders(object):
                 # Reset enemy starting position
                 self.enemyPositionStart = self.enemyPositionDefault
                 self.create_game_over(currentTime)
-
+                self.boss = 0
             display.update()
             self.clock.tick(60)
 
