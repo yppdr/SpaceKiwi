@@ -78,13 +78,13 @@ class SpaceInvaders(object):
         blockerGroup = sprite.Group()
         """for row in range(randint(10, 20)):
             for column in range(randint(50, 100)):
-                blocker = Blocker(randint(10, 18), GREEN, row, column, self)
+                blocker = Blocker(randint(10, 18), BLACK, row, column, self)
                 blocker.rect.x = randint(50, 750) + (200 * number) + (column * blocker.width)
                 blocker.rect.y = randint(50, 550) + (row * blocker.height)"""
 
         for row in range(randint(5, 10)):
             for column in range(randint(5, 10)):
-                blocker = Blocker(randint(10, 18), GREEN, row, column, self)
+                blocker = Blocker(randint(10, 18), BLACK, row, column, self)
                 blocker.rect.x = randint(50, 750)
                 blocker.rect.y = randint(50, 550)
                 blockerGroup.add(blocker)
@@ -166,17 +166,17 @@ class SpaceInvaders(object):
                         if SHIP == '1':
                             bullet = Bullet(self.player.rect.x + 23,
                                             self.player.rect.y + 5, self.player.orientation,
-                                            15, 'laser', 'center', self, )
+                                            15, 'laserkiwi', 'center', self, )
                             self.bullets.add(bullet)
                             self.allSprites.add(self.bullets)
                             self.sounds['shoot'].play()
                         elif SHIP == '2':
                             leftbullet = Bullet(self.player.rect.x + 8,
                                                 self.player.rect.y + 5, self.player.orientation,
-                                                15, 'laser', 'left', self)
+                                                15, 'laserfraise', 'left', self)
                             rightbullet = Bullet(self.player.rect.x + 38,
                                                  self.player.rect.y + 5, self.player.orientation,
-                                                 15, 'laser', 'right', self)
+                                                 15, 'laserfraise', 'right', self)
                             self.bullets.add(leftbullet)
                             self.bullets.add(rightbullet)
                             self.allSprites.add(self.bullets)
@@ -184,13 +184,13 @@ class SpaceInvaders(object):
                         else :
                             leftbullet = Bullet(self.player.rect.x + 8,
                                                 self.player.rect.y + 5, self.player.orientation,
-                                                15, 'laser', 'left', self)
+                                                15, 'laserbanane', 'left', self)
                             rightbullet = Bullet(self.player.rect.x + 38,
                                                  self.player.rect.y + 5, self.player.orientation,
-                                                 15, 'laser', 'right', self)
+                                                 15, 'laserbanane', 'right', self)
                             centerbullet = Bullet(self.player.rect.x + 38,
                                                  self.player.rect.y + 5, self.player.orientation,
-                                                 30, 'laser', 'top', self)
+                                                 30, 'laserbanane', 'top', self)
 
                             self.bullets.add(leftbullet)
                             self.bullets.add(rightbullet)
