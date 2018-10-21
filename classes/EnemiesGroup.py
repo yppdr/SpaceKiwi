@@ -3,7 +3,7 @@ from pygame import *
 from random import *
 
 class EnemiesGroup(sprite.Group):
-    def __init__(self, columns, rows):
+    def __init__(self, columns, rows, shape):
         sprite.Group.__init__(self)
         self.enemies = [[0] * columns for _ in range(rows)]
         self.columns = columns
@@ -15,6 +15,7 @@ class EnemiesGroup(sprite.Group):
         self._rightAliveColumn = columns - 1
         self._leftKilledColumns = 0
         self._rightKilledColumns = 0
+        self.shape = shape
 
     def add(self, *sprites):
         super(sprite.Group, self).add(*sprites)

@@ -12,6 +12,7 @@ class Bullet(sprite.Sprite):
         self.orientation = orientation
         self.side = side
         self.filename = filename
+        # self.placement = placement
         if filename == 'enemylaser':
             if placement == 'LEFT_SIDE':
                 self.orientation = 'RIGHT'

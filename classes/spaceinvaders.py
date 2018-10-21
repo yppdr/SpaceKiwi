@@ -38,6 +38,8 @@ class SpaceInvaders(object):
         self.mainScreen = True
         self.gameOver = False
         self.boss = 0
+        # Enum between GROUP, EXPLODED and BOSS
+        self.mobs_shape = 'GROUP'
         # Initial value for a new game
         self.enemyPositionDefault = 65
         # Counter for enemy starting position (increased each new round)
@@ -166,28 +168,17 @@ class SpaceInvaders(object):
                         if SHIP == '1':
                             bullet = Bullet(self.player.rect.x + 23,
                                             self.player.rect.y + 5, self.player.orientation,
-<<<<<<< HEAD
-                                            15, 'laser', 'center', self, self.player)
-=======
-                                            15, 'laserkiwi', 'center', self, )
->>>>>>> 3c9f0130d1d388ed54cf0b7ad2555cab204c67e2
+                                            15, 'laserkiwi', 'center', self, '')
                             self.bullets.add(bullet)
                             self.allSprites.add(self.bullets)
                             self.sounds['shoot'].play()
                         elif SHIP == '2':
                             leftbullet = Bullet(self.player.rect.x + 8,
                                                 self.player.rect.y + 5, self.player.orientation,
-<<<<<<< HEAD
-                                                15, 'laser', 'left', self, self.player)
+                                                15, 'laserfraise', 'left', self, '')
                             rightbullet = Bullet(self.player.rect.x + 38,
                                                  self.player.rect.y + 5, self.player.orientation,
-                                                 15, 'laser', 'right', self, self.player)
-=======
-                                                15, 'laserfraise', 'left', self)
-                            rightbullet = Bullet(self.player.rect.x + 38,
-                                                 self.player.rect.y + 5, self.player.orientation,
-                                                 15, 'laserfraise', 'right', self)
->>>>>>> 3c9f0130d1d388ed54cf0b7ad2555cab204c67e2
+                                                 15, 'laserfraise', 'right', self, '')
                             self.bullets.add(leftbullet)
                             self.bullets.add(rightbullet)
                             self.allSprites.add(self.bullets)
@@ -195,23 +186,13 @@ class SpaceInvaders(object):
                         else :
                             leftbullet = Bullet(self.player.rect.x + 8,
                                                 self.player.rect.y + 5, self.player.orientation,
-<<<<<<< HEAD
-                                                15, 'laser', 'left', self, self.player)
+                                                15, 'laserbanane', 'left', self, '')
                             rightbullet = Bullet(self.player.rect.x + 38,
                                                  self.player.rect.y + 5, self.player.orientation,
-                                                 15, 'laser', 'right', self, self.player)
+                                                 15, 'laserbanane', 'right', self, '')
                             centerbullet = Bullet(self.player.rect.x + 38,
                                                  self.player.rect.y + 5, self.player.orientation,
-                                                 30, 'laser', 'top', self, self.player)
-=======
-                                                15, 'laserbanane', 'left', self)
-                            rightbullet = Bullet(self.player.rect.x + 38,
-                                                 self.player.rect.y + 5, self.player.orientation,
-                                                 15, 'laserbanane', 'right', self)
-                            centerbullet = Bullet(self.player.rect.x + 38,
-                                                 self.player.rect.y + 5, self.player.orientation,
-                                                 30, 'laserbanane', 'top', self)
->>>>>>> 3c9f0130d1d388ed54cf0b7ad2555cab204c67e2
+                                                 30, 'laserbanane', 'top', self, '')
 
                             self.bullets.add(leftbullet)
                             self.bullets.add(rightbullet)
@@ -223,22 +204,25 @@ class SpaceInvaders(object):
     def make_enemies(self):
 
         if self.boss %2 == 1:
-            enemies = EnemiesGroup(10, 5)
+            self.mobs_shape = 'BOSS'
+            enemies = EnemiesGroup(10, 5, 'BOSS')
             for row in range(5):
                 for column in range(10):
                     enemy = Enemy(row, column, self)
                     enemy.rect.x = 157 + (column * 1)
                     enemy.rect.y = self.enemyPosition + (row * 1)
-                    print(self.enemyPosition)
+                    # print(self.enemyPosition)
                     enemies.add(enemy)
 
         else :
-            enemies = EnemiesGroup(10, 5)
+            enemies = EnemiesGroup(10, 5, 'GROUP')
             for row in range(5):
                 for column in range(10):
                     enemy = Enemy(row, column, self)
-                    enemy.rect.x = randint(0, 750)
-                    enemy.rect.y = randint(100, 400)
+                    # enemy.rect.x = randint(0, 750)
+                    # enemy.rect.y = randint(100, 400)
+                    enemy.rect.x = 157 + (column * 1)
+                    enemy.rect.y = self.enemyPosition + (row * 1)
                     enemies.add(enemy)
 
         self.enemies = enemies
@@ -248,11 +232,9 @@ class SpaceInvaders(object):
     def make_enemies_shoot(self):
         # TODO frequence shot
         if (time.get_ticks() - self.timer) > 700:
-            # enemy = self.enemies.random_bottom(self, self.player.placement)
             enemy = self.enemies.random_shooter(self.player.placement)
             if enemy:
                 # TODO ennemie shot
-
                 self.enemyBullets.add(
                     Bullet(enemy.rect.x + 14, enemy.rect.y + 20, 1, 5,
                            'enemylaser', 'center', self, 'ABOVE'))
@@ -260,21 +242,22 @@ class SpaceInvaders(object):
                 self.timer = time.get_ticks()
 
                 # TODO add second shot en fonction du lvl
-                self.enemyBullets.add(
-                    Bullet(enemy.rect.x + 14, enemy.rect.y + 20, 1, 5,
-                           'enemylaser', 'center', self, 'BOTTOM'))
-                self.allSprites.add(self.enemyBullets)
-                self.timer = time.get_ticks()
-                self.enemyBullets.add(
-                    Bullet(enemy.rect.x + 14, enemy.rect.y + 20, 1, 5,
-                           'enemylaser', 'center', self, 'LEFT_SIDE'))
-                self.allSprites.add(self.enemyBullets)
-                self.timer = time.get_ticks()
-                self.enemyBullets.add(
-                    Bullet(enemy.rect.x + 14, enemy.rect.y + 20, 1, 5,
-                           'enemylaser', 'center', self, 'RIGHT_SIDE'))
-                self.allSprites.add(self.enemyBullets)
-                self.timer = time.get_ticks()
+                if self.mobs_shape:
+                    self.enemyBullets.add(
+                        Bullet(enemy.rect.x + 14, enemy.rect.y + 20, 1, 5,
+                            'enemylaser', 'center', self, 'BOTTOM'))
+                    self.allSprites.add(self.enemyBullets)
+                    self.timer = time.get_ticks()
+                    self.enemyBullets.add(
+                        Bullet(enemy.rect.x + 14, enemy.rect.y + 20, 1, 5,
+                            'enemylaser', 'center', self, 'LEFT_SIDE'))
+                    self.allSprites.add(self.enemyBullets)
+                    self.timer = time.get_ticks()
+                    self.enemyBullets.add(
+                        Bullet(enemy.rect.x + 14, enemy.rect.y + 20, 1, 5,
+                            'enemylaser', 'center', self, 'RIGHT_SIDE'))
+                    self.allSprites.add(self.enemyBullets)
+                    self.timer = time.get_ticks()
 
 
     def calculate_score(self, row):
