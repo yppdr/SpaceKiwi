@@ -14,7 +14,7 @@ class Ship(sprite.Sprite):
         self.rect = self.image.get_rect(topleft=(375, 540))
         self.speed = 5
         self.orientation = 'UP'
-        self.placement = 'LEFT_SIDE'
+        self.placement = 'BOTTOM'
 
     def update(self, keys, *args):
         # if self.rect.y + 200 > self.rect.y and self.rect.y - 200 < self.rect.y and self.rect.x < self.rect.y:
@@ -26,6 +26,16 @@ class Ship(sprite.Sprite):
         # elif self.rect.y > self.rect.y:
         #     self.placement = 'BOTTOM'
         
+        random_placement = randint(0, 4)
+        if random_placement == 0:
+            self.placement = 'BOTTOM'
+        elif random_placement == 1:
+            self.placement = 'LEFT_SIDE'
+        elif random_placement == 2:
+            self.placement = 'ABOVE'
+        elif random_placement == 3:
+            self.placement = 'RIGHT_SIDE'
+
         if platform.system() == 'Windows':
             if keys[K_q]:
                 self.image = transform.rotate(self.image, -90)

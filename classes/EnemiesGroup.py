@@ -57,12 +57,19 @@ class EnemiesGroup(sprite.Group):
             return None
         elif placement == 'LEFT_SIDE':
             row = randint(0, 4)
-            col = self._aliveColumns[0]
-            enemy = self.enemies[row][col]
-            if enemy:
-                return enemy
+            col_choose = self._aliveColumns[0]
+            for col in range(col_choose, len(self._aliveColumns) -1):
+                enemy = self.enemies[row][col]
+                if enemy:
+                    return enemy
             return None
         elif placement == 'RIGHT_SIDE':
+            row = randint(0, 4)
+            col_choose = self._aliveColumns[len(self._aliveColumns) -1]
+            for col in range(col_choose, 0, -1):
+                enemy = self.enemies[row][col]
+                if enemy:
+                    return enemy
             return None
 
 

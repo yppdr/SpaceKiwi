@@ -209,7 +209,7 @@ class SpaceInvaders(object):
 
     def make_enemies(self):
 
-        if self.boss == 1:
+        if self.boss %2 == 1:
             enemies = EnemiesGroup(10, 5)
             for row in range(5):
                 for column in range(10):
@@ -238,11 +238,30 @@ class SpaceInvaders(object):
             enemy = self.enemies.random_shooter(self.player.placement)
             if enemy:
                 # TODO ennemie shot
+
                 self.enemyBullets.add(
                     Bullet(enemy.rect.x + 14, enemy.rect.y + 20, 1, 5,
-                           'enemylaser', 'center', self, self.player.placement))
+                           'enemylaser', 'center', self, 'ABOVE'))
                 self.allSprites.add(self.enemyBullets)
                 self.timer = time.get_ticks()
+
+                # TODO add second shot en fonction du lvl
+                self.enemyBullets.add(
+                    Bullet(enemy.rect.x + 14, enemy.rect.y + 20, 1, 5,
+                           'enemylaser', 'center', self, 'BOTTOM'))
+                self.allSprites.add(self.enemyBullets)
+                self.timer = time.get_ticks()
+                self.enemyBullets.add(
+                    Bullet(enemy.rect.x + 14, enemy.rect.y + 20, 1, 5,
+                           'enemylaser', 'center', self, 'LEFT_SIDE'))
+                self.allSprites.add(self.enemyBullets)
+                self.timer = time.get_ticks()
+                self.enemyBullets.add(
+                    Bullet(enemy.rect.x + 14, enemy.rect.y + 20, 1, 5,
+                           'enemylaser', 'center', self, 'RIGHT_SIDE'))
+                self.allSprites.add(self.enemyBullets)
+                self.timer = time.get_ticks()
+
 
     def calculate_score(self, row):
         scores = {0: 30,
