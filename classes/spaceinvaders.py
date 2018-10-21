@@ -129,9 +129,14 @@ class SpaceInvaders(object):
             sound.set_volume(0.8)
 
         self.noteIndex = 0
-
-        # if platform.system() == 'Windows':
-        #     winsound.PlaySound("sebastien", winsound.SND_ASYNC | winsound.SND_ALIAS)
+        print self.boss
+        if platform.system() == 'Windows':
+            if self.boss % 2 == 0:
+                apero = randint(1,4)
+                winsound.PlaySound(str(apero), winsound.SND_ASYNC | winsound.SND_ALIAS)
+            else:
+               mob = randint(10,13)
+               winsound.PlaySound(str(mob), winsound.SND_ASYNC | winsound.SND_ALIAS)
 
     def play_main_music(self, currentTime):
         moveTime = self.enemies.sprites()[0].moveTime
@@ -228,6 +233,7 @@ class SpaceInvaders(object):
                     self.allSprites.add(newShip)
                     self.laserGroup.add(newShip)
                     break
+        print self.boss
         if self.boss %2 == 1:
             self.mobs_shape = 'BOSS'
             enemies = EnemiesGroup(10, 5, 'BOSS')
@@ -238,8 +244,7 @@ class SpaceInvaders(object):
                     enemy.rect.y = self.enemyPosition + (row * 1)
                     enemies.add(enemy)
         else:
-            # mobs_grp_choice = randint(0, 1)
-            mobs_grp_choice = 1
+            mobs_grp_choice = randint(0, 1)
             if mobs_grp_choice == 0:
                 self.mobs_shape = 'EXPLODED'
                 enemies = EnemiesGroup(10, 5, 'EXPLODED')
@@ -499,7 +504,7 @@ class SpaceInvaders(object):
                     self.update_enemy_speed()
                     if len(self.enemies) > 0:
                         self.make_enemies_shoot()
-                        self.boss = 1
+                        self.boss += 1
 
             elif self.gameOver:
                 currentTime = time.get_ticks()
