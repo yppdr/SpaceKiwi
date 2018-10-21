@@ -210,8 +210,25 @@ class SpaceInvaders(object):
 
     def make_enemies(self):
 
-        # TODO apparition en fonction du lvl
-
+        laser = sprite.groupcollide(self.bullets, self.mysteryGroup,
+                                    True, True)
+        if laser:
+            for value in mysterydict.values():
+                for currentSprite in value:
+                    currentSprite.mysteryEntered.stop()
+                    self.sounds['mysterykilled'].play()
+                    score = self.calculate_score(currentSprite.row)
+                    explosion = Explosion(currentSprite.rect.x,
+                                          currentSprite.rect.y,
+                                          currentSprite.row, False, True,
+                                          score, self)
+                    self.explosionsGroup.add(explosion)
+                    self.allSprites.remove(currentSprite)
+                    self.laserGroup.remove(currentSprite)
+                    newShip = Highlaser(game, self.player.rect.x, self.player.rect.x)
+                    self.allSprites.add(newShip)
+                    self.laserGroup.add(newShip)
+                    break
         if self.boss %2 == 1:
             self.mobs_shape = 'BOSS'
             enemies = EnemiesGroup(10, 5, 'BOSS')

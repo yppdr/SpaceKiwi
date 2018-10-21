@@ -19,7 +19,6 @@ class Ship(sprite.Sprite):
     def search_alive(self, enemiesGroup):
         for i in enemiesGroup.enemies:
             for enemy in i:
-                print type(enemy)
                 if enemy:
                     return enemy
         return None
