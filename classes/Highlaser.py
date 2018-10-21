@@ -7,7 +7,6 @@ class Highlaser(sprite.Sprite):
         self.game = game
         self.xpos = xpos
         self.ypos = ypos
-
         sprite.Sprite.__init__(self)
         self.image = IMAGES["highlaser"]
         self.image = transform.scale(self.image, (75, 35))

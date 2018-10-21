@@ -210,25 +210,8 @@ class SpaceInvaders(object):
 
     def make_enemies(self):
 
-        laser = sprite.groupcollide(self.bullets, self.mysteryGroup,
-                                    True, True)
-        if laser:
-            for value in mysterydict.values():
-                for currentSprite in value:
-                    currentSprite.mysteryEntered.stop()
-                    self.sounds['mysterykilled'].play()
-                    score = self.calculate_score(currentSprite.row)
-                    explosion = Explosion(currentSprite.rect.x,
-                                          currentSprite.rect.y,
-                                          currentSprite.row, False, True,
-                                          score, self)
-                    self.explosionsGroup.add(explosion)
-                    self.allSprites.remove(currentSprite)
-                    self.laserGroup.remove(currentSprite)
-                    newShip = Highlaser(game, self.player.rect.x, self.player.rect.x)
-                    self.allSprites.add(newShip)
-                    self.laserGroup.add(newShip)
-                    break
+        # TODO apparition en fonction du lvl
+
         if self.boss %2 == 1:
             self.mobs_shape = 'BOSS'
             enemies = EnemiesGroup(10, 5, 'BOSS')
@@ -238,10 +221,9 @@ class SpaceInvaders(object):
                     enemy.rect.x = 157 + (column * 1)
                     enemy.rect.y = self.enemyPosition + (row * 1)
                     enemies.add(enemy)
-
         else:
-            mobs_grp_choice = randint(0, 1)
-            # mobs_grp_choice = 0
+            # mobs_grp_choice = randint(0, 1)
+            mobs_grp_choice = 1
             if mobs_grp_choice == 0:
                 self.mobs_shape = 'EXPLODED'
                 enemies = EnemiesGroup(10, 5, 'EXPLODED')
@@ -266,29 +248,16 @@ class SpaceInvaders(object):
                                        self.livesGroup, self.mysteryShip, self.highlaser)
 
     def make_enemies_shoot(self):
-        # TODO frequence shot
+        # TODO frequence shot en fonction du lvl
         if (time.get_ticks() - self.timer) > 700:
             enemy = self.enemies.random_shooter(self.player.placement)
             if enemy:
-                # TODO ennemie shot
-                rotationTire = ""
-                #Tranqueur de la position du joueur
-                posJoueur = self.player.rect.copy()
-
-                #Changement de la rotation en fonction de la position du vaisseau
-                if  10<= posJoueur[0] <= 115 and 40<=posJoueur[1] <= 265:
-                    rotationTire = "RIGHT"
-                elif 655<= posJoueur[0] <= 740 and 35<=posJoueur[1] <= 250:
-                    rotationTire = "LEFT"
-                elif 135<= posJoueur[0] <= 615 and posJoueur[1] == 10:
-                    rotationTire = "UP"
+                # TODO add second shot en fonction du lvl
                 self.enemyBullets.add(
                     Bullet(enemy.rect.x + 14, enemy.rect.y + 20, 1, 5,
                            'enemylaser', 'center', self, self.player.placement))
                 self.allSprites.add(self.enemyBullets)
                 self.timer = time.get_ticks()
-
-                # TODO add second shot en fonction du lvl
 
                 if self.mobs_shape == 'EXPLODED':
                     self.enemyBullets.add(
