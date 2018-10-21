@@ -29,14 +29,14 @@ class EnemiesGroup(sprite.Group):
                 return False
         return True
 
-    def random_bottom(self, placement):
-        random_index = randint(0, len(self._aliveColumns) - 1)
-        col = self._aliveColumns[random_index]
-        for row in range(self.rows, 0, -1):
-            enemy = self.enemies[row - 1][col]
-            if enemy:
-                return enemy
-        return None
+    # def random_bottom(self, placement):
+    #     random_index = randint(0, len(self._aliveColumns) - 1)
+    #     col = self._aliveColumns[random_index]
+    #     for row in range(self.rows, 0, -1):
+    #         enemy = self.enemies[row - 1][col]
+    #         if enemy:
+    #             return enemy
+    #     return None
 
     def random_shooter(self, placement):
         if placement == 'BOTTOM':

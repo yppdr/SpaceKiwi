@@ -16,11 +16,25 @@ class Ship(sprite.Sprite):
         self.orientation = 'UP'
         self.placement = 'BOTTOM'
 
+    def search_alive(self, enemiesGroup):
+        for i in enemiesGroup.enemies:
+            for enemy in i:
+                print type(enemy)
+                if enemy:
+                    return enemy
+        return None
+
     def update(self, keys, *args):
 
         if args[1].shape == 'GROUP':
-            xposMob = args[1].enemies[0][0].rect.x
-            yposMob = args[1].enemies[0][0].rect.y
+            enemy = self.search_alive(args[1])
+            if enemy:
+                xposMob = enemy.rect.x
+                yposMob = enemy.rect.y
+            else:
+                xposMob = 0
+                yposMob = 0
+
             xpos = self.rect.x
             ypos = self.rect.y
             if xpos < xposMob and ypos > yposMob and ypos < yposMob + 250:
