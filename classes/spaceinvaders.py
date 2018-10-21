@@ -127,7 +127,8 @@ class SpaceInvaders(object):
 
         self.noteIndex = 0
 
-        winsound.PlaySound("sebastien", winsound.SND_ASYNC | winsound.SND_ALIAS)
+        if platform.system() == 'Windows':
+            winsound.PlaySound("sebastien", winsound.SND_ASYNC | winsound.SND_ALIAS)
 
     def play_main_music(self, currentTime):
         moveTime = self.enemies.sprites()[0].moveTime
