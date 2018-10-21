@@ -31,7 +31,6 @@ class EnemiesGroup(sprite.Group):
 
     def random_bottom(self, placement):
         random_index = randint(0, len(self._aliveColumns) - 1)
-        # print(self._aliveColumns)
         col = self._aliveColumns[random_index]
         for row in range(self.rows, 0, -1):
             enemy = self.enemies[row - 1][col]
