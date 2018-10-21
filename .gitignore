@@ -1,3 +1,5 @@
 # pre-compilé
 *.pyc
 \.idea/
+
+sounds/
